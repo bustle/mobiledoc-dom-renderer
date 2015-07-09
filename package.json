@@ -1,0 +1,29 @@
+{
+  "name": "mobiledoc-dom-renderer",
+  "version": "0.1.0",
+  "description": "Renders Mobiledoc input to DOM output",
+  "main": "dist/commonjs/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist/ && broccoli build dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bustlelabs/mobiledoc-dom-renderer"
+  },
+  "keywords": [
+    "mobiledoc",
+    "content-kit"
+  ],
+  "author": "Cory Forsyth <cory.forsyth@gmail.com> (http://coryforsyth.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bustlelabs/mobiledoc-dom-renderer/issues"
+  },
+  "homepage": "https://github.com/bustlelabs/mobiledoc-dom-renderer",
+  "devDependencies": {
+    "broccoli": "^0.16.3",
+    "broccoli-merge-trees": "^0.2.1",
+    "broccoli-multi-builder": "^0.2.6"
+  }
+}
