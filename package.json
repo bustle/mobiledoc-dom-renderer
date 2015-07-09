@@ -20,6 +20,10 @@
   "bugs": {
     "url": "https://github.com/bustlelabs/mobiledoc-dom-renderer/issues"
   },
+  "files": {
+    "dist",
+    "lib"
+  },
   "homepage": "https://github.com/bustlelabs/mobiledoc-dom-renderer",
   "devDependencies": {
     "broccoli": "^0.16.3",
