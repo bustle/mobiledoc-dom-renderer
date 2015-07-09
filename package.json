@@ -2,7 +2,7 @@
   "name": "mobiledoc-dom-renderer",
   "version": "0.1.2",
   "description": "Renders Mobiledoc input to DOM output",
-  "main": "dist/commonjs/index.js",
+  "main": "dist/global/mobiledoc-dom-renderer.js",
   "scripts": {
     "test": "testem ci",
     "build": "rm -rf dist/ && broccoli build dist"
