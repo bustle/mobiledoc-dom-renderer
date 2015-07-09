@@ -4,7 +4,7 @@
   "description": "Renders Mobiledoc input to DOM output",
   "main": "dist/commonjs/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "testem ci",
     "build": "rm -rf dist/ && broccoli build dist"
   },
   "repository": {
@@ -24,6 +24,7 @@
   "devDependencies": {
     "broccoli": "^0.16.3",
     "broccoli-merge-trees": "^0.2.1",
-    "broccoli-multi-builder": "^0.2.6"
+    "broccoli-multi-builder": "^0.2.6",
+    "broccoli-test-builder": "^0.2.0"
   }
 }
