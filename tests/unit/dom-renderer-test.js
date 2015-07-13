@@ -51,7 +51,7 @@ test('renders a mobiledoc with simple (no attributes) marker', (assert) => {
     [        // markers
       ['B'],
     ],
-    [   // sections
+    [        // sections
       [1, 'P', [
         [[0], 1, 'hello world']]
       ]
@@ -70,7 +70,7 @@ test('renders a mobiledoc with complex (has attributes) marker', (assert) => {
     [        // markers
       ['A', ['href', 'http://google.com']],
     ],
-    [   // sections
+    [        // sections
       [1, 'P', [
           [[0], 1, 'hello world']
       ]]
@@ -90,7 +90,7 @@ test('renders a mobiledoc with multiple markups in a section', (assert) => {
       ['B'],
       ['I']
     ],
-    [   // sections
+    [        // sections
       [1, 'P', [
         [[0], 0, 'hello '], // b
         [[1], 0, 'brave '], // b+i
@@ -105,4 +105,20 @@ test('renders a mobiledoc with multiple markups in a section', (assert) => {
   let sectionEl = rendered.childNodes[0];
 
   assert.equal(sectionEl.innerHTML, '<b>hello <i>brave new </i>world</b>');
+});
+
+test('renders a mobiledoc with image section', (assert) => {
+  let url = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
+  let mobiledoc = [
+    [],      // markers
+    [        // sections
+      [2, url]
+    ]
+  ];
+  let rendered = renderer.render(mobiledoc);
+  assert.equal(rendered.childNodes.length, 1,
+               'renders 1 section');
+  let sectionEl = rendered.childNodes[0];
+
+  assert.equal(sectionEl.src, url);
 });
