@@ -122,3 +122,34 @@ test('renders a mobiledoc with image section', (assert) => {
 
   assert.equal(sectionEl.src, url);
 });
+
+test('renders a mobiledoc with card section', (assert) => {
+  assert.expect(3);
+  let cardName = 'title-card';
+  let payload = {
+    name: 'bob'
+  };
+  let TitleCard = {
+    name: cardName,
+    display: {
+      setup(element, options, env, setupPayload) {
+        assert.deepEqual(payload, setupPayload);
+        element.innerHTML = setupPayload.name;
+      }
+    }
+  };
+  let mobiledoc = [
+    [],      // markers
+    [        // sections
+      [10, cardName, payload]
+    ]
+  ];
+  let rendered = renderer.render(mobiledoc, document.createElement('div'), {
+    [cardName]: TitleCard
+  });
+  assert.equal(rendered.childNodes.length, 1,
+               'renders 1 section');
+  let sectionEl = rendered.childNodes[0];
+
+  assert.equal(sectionEl.innerHTML, payload.name);
+});
