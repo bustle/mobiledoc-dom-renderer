@@ -8,21 +8,24 @@ It is intended to be a small libraray that is run client-side in a browser that 
 ### Usage
 
 ```
-var mobiledoc = [
-  [         // markers
-    ['B']
-  ],
-  [         // sections
-    [1, 'P', [ // array of markups
-      // markup
-      [
-        [0],          // open markers (by index)
-        0,            // close count
-        'hello world'
+var mobiledoc = {
+  version: "0.1",
+  sections: [
+    [         // markers
+      ['B']
+    ],
+    [         // sections
+      [1, 'P', [ // array of markups
+        // markup
+        [
+          [0],          // open markers (by index)
+          0,            // close count
+          'hello world'
+        ]
       ]
     ]
   ]
-];
+};
 var renderer = new DOMRenderer();
 var rendered = renderer.render(mobiledoc);
 document.getElementById('output').appendChild(rendered);
