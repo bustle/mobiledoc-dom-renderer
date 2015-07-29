@@ -1,6 +1,7 @@
 /* global QUnit */
 
 const { test } = QUnit;
+const MOBILEDOC_VERSION = '0.1';
 
 import DOMRenderer from 'mobiledoc-dom-renderer';
 
@@ -17,10 +18,13 @@ test('it exists', (assert) => {
 });
 
 test('renders an empty mobiledoc', (assert) => {
-  let mobiledoc = [
-    [], // markers
-    []  // sections
-  ];
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [], // markers
+      []  // sections
+    ]
+  };
   let rendered = renderer.render(mobiledoc);
 
   assert.ok(rendered, 'renders output');
@@ -29,14 +33,17 @@ test('renders an empty mobiledoc', (assert) => {
 });
 
 test('renders a mobiledoc without markers', (assert) => {
-  let mobiledoc = [
-    [], // markers
-    [   // sections
-      [1, 'P', [
-        [[], 0, 'hello world']]
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [], // markers
+      [   // sections
+        [1, 'P', [
+          [[], 0, 'hello world']]
+        ]
       ]
     ]
-  ];
+  };
   let rendered = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
@@ -47,16 +54,19 @@ test('renders a mobiledoc without markers', (assert) => {
 });
 
 test('renders a mobiledoc with simple (no attributes) marker', (assert) => {
-  let mobiledoc = [
-    [        // markers
-      ['B'],
-    ],
-    [        // sections
-      [1, 'P', [
-        [[0], 1, 'hello world']]
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [        // markers
+        ['B'],
+      ],
+      [        // sections
+        [1, 'P', [
+          [[0], 1, 'hello world']]
+        ]
       ]
     ]
-  ];
+  };
   let rendered = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
@@ -66,16 +76,19 @@ test('renders a mobiledoc with simple (no attributes) marker', (assert) => {
 });
 
 test('renders a mobiledoc with complex (has attributes) marker', (assert) => {
-  let mobiledoc = [
-    [        // markers
-      ['A', ['href', 'http://google.com']],
-    ],
-    [        // sections
-      [1, 'P', [
-          [[0], 1, 'hello world']
-      ]]
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [        // markers
+        ['A', ['href', 'http://google.com']],
+      ],
+      [        // sections
+        [1, 'P', [
+            [[0], 1, 'hello world']
+        ]]
+      ]
     ]
-  ];
+  };
   let rendered = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
@@ -85,20 +98,23 @@ test('renders a mobiledoc with complex (has attributes) marker', (assert) => {
 });
 
 test('renders a mobiledoc with multiple markups in a section', (assert) => {
-  let mobiledoc = [
-    [        // markers
-      ['B'],
-      ['I']
-    ],
-    [        // sections
-      [1, 'P', [
-        [[0], 0, 'hello '], // b
-        [[1], 0, 'brave '], // b+i
-        [[], 1, 'new '], // close i
-        [[], 1, 'world'] // close b
-      ]]
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [        // markers
+        ['B'],
+        ['I']
+      ],
+      [        // sections
+        [1, 'P', [
+          [[0], 0, 'hello '], // b
+          [[1], 0, 'brave '], // b+i
+          [[], 1, 'new '], // close i
+          [[], 1, 'world'] // close b
+        ]]
+      ]
     ]
-  ];
+  };
   let rendered = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
@@ -109,12 +125,15 @@ test('renders a mobiledoc with multiple markups in a section', (assert) => {
 
 test('renders a mobiledoc with image section', (assert) => {
   let url = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
-  let mobiledoc = [
-    [],      // markers
-    [        // sections
-      [2, url]
+  let mobiledoc = {
+    versions: MOBILEDOC_VERSION,
+    sections: [
+      [],      // markers
+      [        // sections
+        [2, url]
+      ]
     ]
-  ];
+  };
   let rendered = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
@@ -138,12 +157,15 @@ test('renders a mobiledoc with card section', (assert) => {
       }
     }
   };
-  let mobiledoc = [
-    [],      // markers
-    [        // sections
-      [10, cardName, payload]
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],      // markers
+      [        // sections
+        [10, cardName, payload]
+      ]
     ]
-  ];
+  };
   let rendered = renderer.render(mobiledoc, document.createElement('div'), {
     [cardName]: TitleCard
   });

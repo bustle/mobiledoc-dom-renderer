@@ -1,11 +1,11 @@
-# Mobiledoc DOM Renderer [![Build Status](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer.svg?branch=master)](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer)
+## Mobiledoc DOM Renderer [![Build Status](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer.svg?branch=master)](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer)
 
 This is a runtime renderer for the `mobiledoc` format.
 It renders mobiledoc to DOM elements.
 
 It is intended to be a small libraray that is run client-side in a browser that wants to display mobiledoc.
 
-## Usage
+### Usage
 
 ```
 var mobiledoc = [
@@ -30,6 +30,13 @@ document.getElementById('output').appendChild(rendered);
 // into 'output' element
 ```
 
-## Tests
+### Tests
 
  * `npm test`
+
+### Releasing
+
+* `npm version patch` or `minor` or `major`
+* `npm run build`
+* `git push bustle --tags`
+* `npm publish`
