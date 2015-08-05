@@ -1,9 +1,9 @@
 ## Mobiledoc DOM Renderer [![Build Status](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer.svg?branch=master)](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer)
 
-This is a runtime renderer for the `mobiledoc` format.
-It renders mobiledoc to DOM elements.
+This is a DOM renderer for the [Mobiledoc](https://github.com/bustlelabs/content-kit-editor/blob/master/MOBILEDOC.md) format used
+by the [Content-Kit Editor](https://github.com/bustlelabs/content-kit-editor).
 
-It is intended to be a small libraray that is run client-side in a browser that wants to display mobiledoc.
+The renderer is a small library intended for use in browser clients.
 
 ### Usage
 
