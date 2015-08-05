@@ -1,6 +1,6 @@
 {
   "name": "mobiledoc-dom-renderer",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Renders Mobiledoc input to DOM output",
   "main": "dist/global/mobiledoc-dom-renderer.js",
   "scripts": {
