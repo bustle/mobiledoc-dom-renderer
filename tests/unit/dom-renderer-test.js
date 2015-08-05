@@ -175,3 +175,27 @@ test('renders a mobiledoc with card section', (assert) => {
 
   assert.equal(sectionEl.innerHTML, payload.name);
 });
+
+test('renders a mobiledoc with default image section', (assert) => {
+  assert.expect(3);
+  let cardName = 'image';
+  let payload = {
+    src: 'example.org/foo.jpg'
+  };
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],      // markers
+      [        // sections
+        [10, cardName, payload]
+      ]
+    ]
+  };
+  let rendered = renderer.render(mobiledoc, document.createElement('div'));
+  assert.equal(rendered.childNodes.length, 1,
+               'renders 1 section');
+  let sectionEl = rendered.childNodes[0];
+
+  assert.equal(sectionEl.firstChild.tagName, 'IMG');
+  assert.equal(sectionEl.firstChild.src, 'example.org/foo.jpg');
+});
