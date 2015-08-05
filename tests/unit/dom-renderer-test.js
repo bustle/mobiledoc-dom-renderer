@@ -180,7 +180,7 @@ test('renders a mobiledoc with default image section', (assert) => {
   assert.expect(3);
   let cardName = 'image';
   let payload = {
-    src: 'example.org/foo.jpg'
+    src: 'http://example.org/foo.jpg'
   };
   let mobiledoc = {
     version: MOBILEDOC_VERSION,
@@ -197,5 +197,5 @@ test('renders a mobiledoc with default image section', (assert) => {
   let sectionEl = rendered.childNodes[0];
 
   assert.equal(sectionEl.firstChild.tagName, 'IMG');
-  assert.equal(sectionEl.firstChild.src, 'example.org/foo.jpg');
+  assert.equal(sectionEl.firstChild.src, 'http://example.org/foo.jpg');
 });
