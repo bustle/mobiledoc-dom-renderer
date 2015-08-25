@@ -26,7 +26,7 @@ var mobiledoc = {
     ]
   ]
 };
-var renderer = new DOMRenderer();
+var renderer = new MobiledocDOMRenderer();
 var cards = {};
 var rendered = renderer.render(mobiledoc, document.createElement('div'), cards);
 document.getElementById('output').appendChild(rendered);
