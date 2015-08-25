@@ -2,7 +2,6 @@
   "name": "mobiledoc-dom-renderer",
   "version": "0.1.10",
   "description": "Renders Mobiledoc input to DOM output",
-  "main": "dist/global/mobiledoc-dom-renderer.js",
   "scripts": {
     "test": "testem ci",
     "build": "rm -rf dist/ && broccoli build dist"
@@ -12,6 +11,7 @@
     "url": "https://github.com/bustlelabs/mobiledoc-dom-renderer"
   },
   "keywords": [
+    "ember-addon",
     "mobiledoc",
     "content-kit"
   ],
@@ -22,7 +22,8 @@
   },
   "files": [
     "dist",
-    "lib"
+    "lib",
+    "index.js"
   ],
   "homepage": "https://github.com/bustlelabs/mobiledoc-dom-renderer",
   "devDependencies": {
@@ -31,5 +32,8 @@
     "broccoli-multi-builder": "^0.2.6",
     "broccoli-test-builder": "^0.2.0",
     "testem": "^0.9.0-1"
+  },
+  "dependencies": {
+    "broccoli-funnel": "^0.2.8"
   }
 }
