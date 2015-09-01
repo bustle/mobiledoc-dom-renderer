@@ -1,7 +1,7 @@
 /* global QUnit */
 
 const { test } = QUnit;
-const MOBILEDOC_VERSION = '0.1';
+const MOBILEDOC_VERSION = '0.2.0';
 
 import DOMRenderer from 'mobiledoc-dom-renderer';
 
@@ -198,4 +198,35 @@ test('renders a mobiledoc with default image section', (assert) => {
 
   assert.equal(sectionEl.firstChild.tagName, 'IMG');
   assert.equal(sectionEl.firstChild.src, 'http://example.org/foo.jpg');
+});
+
+test('renders mobiledoc with lists', (assert) => {
+  const mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],
+      [
+        [3, 'ul', [
+          [[[], 0, 'first item']],
+          [[[], 0, 'second item']],
+        ]]
+      ]
+    ]
+  };
+  const rendered = renderer.render(mobiledoc, document.createElement('div'));
+  assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
+
+  const section = rendered.childNodes[0];
+  assert.equal(section.tagName, 'UL');
+
+  const items = section.childNodes;
+  assert.equal(items.length, 2, '2 list items');
+
+  assert.equal(items[0].tagName, 'LI', 'correct tagName for item 1');
+  assert.equal(items[0].childNodes[0].textContent, 'first item',
+               'correct text node for item 1');
+
+  assert.equal(items[1].tagName, 'LI', 'correct tagName for item 2');
+  assert.equal(items[1].childNodes[0].textContent, 'second item',
+               'correct text node for item 2');
 });
