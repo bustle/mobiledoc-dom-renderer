@@ -1,6 +1,6 @@
 {
   "name": "mobiledoc-dom-renderer",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Renders Mobiledoc input to DOM output",
   "scripts": {
     "test": "testem ci",
