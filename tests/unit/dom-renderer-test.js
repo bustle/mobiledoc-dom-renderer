@@ -176,6 +176,37 @@ test('renders a mobiledoc with card section', (assert) => {
   assert.equal(sectionEl.innerHTML, payload.name);
 });
 
+test('renders a mobiledoc with card section and no payload', (assert) => {
+  assert.expect(3);
+  let cardName = 'title-card';
+  let TitleCard = {
+    name: cardName,
+    display: {
+      setup(element, options, env, setupPayload) {
+        assert.deepEqual({}, setupPayload);
+        element.innerHTML = '';
+      }
+    }
+  };
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],      // markers
+      [        // sections
+        [10, cardName]
+      ]
+    ]
+  };
+  let rendered = renderer.render(mobiledoc, document.createElement('div'), {
+    [cardName]: TitleCard
+  });
+  assert.equal(rendered.childNodes.length, 1,
+               'renders 1 section');
+  let sectionEl = rendered.childNodes[0];
+
+  assert.equal(sectionEl.innerHTML, '');
+});
+
 test('renders a mobiledoc with default image section', (assert) => {
   assert.expect(3);
   let cardName = 'image';
