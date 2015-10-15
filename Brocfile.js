@@ -9,6 +9,7 @@ var options = {
 module.exports = mergeTrees([
   multiBuilder.build('amd', options),
   multiBuilder.build('global', options),
+  multiBuilder.build('commonjs', options),
   testBuilder.build()
   // no need to build for CJS
 ]);

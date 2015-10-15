@@ -35,5 +35,6 @@
   },
   "dependencies": {
     "broccoli-funnel": "^0.2.8"
-  }
+  },
+  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js"
 }
