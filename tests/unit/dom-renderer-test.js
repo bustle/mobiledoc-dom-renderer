@@ -207,6 +207,22 @@ test('renders a mobiledoc with card section and no payload', (assert) => {
   assert.equal(sectionEl.innerHTML, '');
 });
 
+test('when passed an array of cards, throws', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],
+      []
+    ]
+  };
+  let cards = [{name: 'test-card'}];
+  let element = document.createElement('div');
+
+  assert.throws(() => {
+    renderer.render(mobiledoc, element, cards);
+  }, /cards.*must be passed as an object/);
+});
+
 test('renders a mobiledoc with default image section', (assert) => {
   assert.expect(3);
   let cardName = 'image';
