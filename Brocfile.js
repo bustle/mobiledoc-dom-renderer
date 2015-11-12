@@ -1,3 +1,4 @@
+/* jshint node: true */
 var multiBuilder = require('broccoli-multi-builder');
 var mergeTrees = require('broccoli-merge-trees');
 var testBuilder = require('broccoli-test-builder');
@@ -11,5 +12,4 @@ module.exports = mergeTrees([
   multiBuilder.build('global', options),
   multiBuilder.build('commonjs', options),
   testBuilder.build()
-  // no need to build for CJS
 ]);
