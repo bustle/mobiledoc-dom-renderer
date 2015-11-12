@@ -11,8 +11,8 @@
     "url": "https://github.com/bustlelabs/mobiledoc-dom-renderer"
   },
   "keywords": [
-    "ember-addon",
     "mobiledoc",
+    "mobiledoc-renderer",
     "content-kit"
   ],
   "author": "Cory Forsyth <cory.forsyth@gmail.com> (http://coryforsyth.com/)",
@@ -33,11 +33,5 @@
     "broccoli-test-builder": "^0.2.0",
     "testem": "^0.9.0-1"
   },
-  "dependencies": {
-    "broccoli-funnel": "^0.2.8"
-  },
-  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js",
-  "ember-addon": {
-    "main": "index.js"
-  }
+  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js"
 }
