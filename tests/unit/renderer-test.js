@@ -126,7 +126,7 @@ test('renders a mobiledoc with multiple markups in a section', (assert) => {
 test('renders a mobiledoc with image section', (assert) => {
   let url = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
   let mobiledoc = {
-    versions: MOBILEDOC_VERSION,
+    version: MOBILEDOC_VERSION,
     sections: [
       [],      // markers
       [        // sections
@@ -357,4 +357,25 @@ test('rendering nested mobiledocs in cards', (assert) => {
   assert.equal(card.childNodes.length, 1, 'card has 1 child');
   assert.equal(card.childNodes[0].tagName, 'P', 'card has P child');
   assert.equal(card.childNodes[0].innerText, 'hello world');
+});
+
+test('throw when given unexpected mobiledoc version', (assert) => {
+  let mobiledoc = {
+    version: '0.1.0',
+    sections: [
+      [], []
+    ]
+  };
+
+  assert.throws(
+    () => renderer.render(mobiledoc),
+    /Unexpected Mobiledoc version.*0.1.0/
+  );
+
+  mobiledoc.version = '0.2.1';
+  assert.throws(
+    () => renderer.render(mobiledoc),
+    /Unexpected Mobiledoc version.*0.2.1/
+  );
+  
 });
