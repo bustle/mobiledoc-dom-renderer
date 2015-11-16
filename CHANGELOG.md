@@ -1,8 +1,15 @@
-<a name="0.1.17"></a>
-## 0.1.17 (2015-11-16)
+<a name="0.1.18"></a>
+## 0.1.18 (2015-11-16)
 
 
-* Add update-changelog ([59f5fe1](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/59f5fe1))
+
+
+<a name="0.1.18"></a>
+## 0.1.18 (2015-11-16)
+
+
+* 0.1.18 ([172ba45](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/172ba45))
+* Add update-changelog ([2f7100c](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/2f7100c))
 * Do not share state when rendering ([b51510e](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/b51510e)), closes [#11](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/11)
 * Make file structure more closely match HTML renderer ([2c6dcad](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/2c6dcad))
 * Merge pull request #12 from bustlelabs/fix-spaces-8 ([48cdcf1](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/48cdcf1))
