@@ -3,17 +3,17 @@
 const { test } = QUnit;
 const MOBILEDOC_VERSION = '0.2.0';
 
-import DOMRenderer from 'mobiledoc-dom-renderer';
+import Renderer from 'mobiledoc-dom-renderer';
 
 let renderer;
 QUnit.module('Unit: Mobiledoc DOM Renderer', {
   beforeEach() {
-    renderer = new DOMRenderer();
+    renderer = new Renderer();
   }
 });
 
 test('it exists', (assert) => {
-  assert.ok(DOMRenderer, 'class exists');
+  assert.ok(Renderer, 'class exists');
   assert.ok(renderer, 'instance exists');
 });
 
