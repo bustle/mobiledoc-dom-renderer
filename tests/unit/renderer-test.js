@@ -3,17 +3,17 @@
 const { test } = QUnit;
 const MOBILEDOC_VERSION = '0.2.0';
 
-import DOMRenderer from 'mobiledoc-dom-renderer';
+import Renderer from 'mobiledoc-dom-renderer';
 
 let renderer;
 QUnit.module('Unit: Mobiledoc DOM Renderer', {
   beforeEach() {
-    renderer = new DOMRenderer();
+    renderer = new Renderer();
   }
 });
 
 test('it exists', (assert) => {
-  assert.ok(DOMRenderer, 'class exists');
+  assert.ok(Renderer, 'class exists');
   assert.ok(renderer, 'instance exists');
 });
 
@@ -314,4 +314,47 @@ test('multiple spaces should preserve whitespace with nbsps', (assert) => {
   let rendered = renderer.render(mobiledoc);
   let textNode = rendered.firstChild.firstChild;
   assert.equal(textNode.textContent, expectedText, 'renders the text');
+});
+
+test('rendering nested mobiledocs in cards', (assert) => {
+  let renderer = new Renderer();
+
+  let cards = {
+    'nested-card': {
+      display: {
+        setup(element, options, env, payload) {
+          renderer.render(payload.mobiledoc, element, cards);
+        }
+      }
+    }
+  };
+
+  let innerMobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [], // markers
+      [   // sections
+        [1, 'P', [
+          [[], 0, 'hello world']]
+        ]
+      ]
+    ]
+  };
+
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [], // markers
+      [   // sections
+        [10, 'nested-card', {mobiledoc: innerMobiledoc}]
+      ]
+    ]
+  };
+
+  let rendered = renderer.render(mobiledoc, document.createElement('div'), cards);
+  assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
+  let card = rendered.childNodes[0];
+  assert.equal(card.childNodes.length, 1, 'card has 1 child');
+  assert.equal(card.childNodes[0].tagName, 'P', 'card has P child');
+  assert.equal(card.childNodes[0].innerText, 'hello world');
 });
