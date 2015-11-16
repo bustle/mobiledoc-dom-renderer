@@ -143,16 +143,21 @@ test('renders a mobiledoc with image section', (assert) => {
 });
 
 test('renders a mobiledoc with card section', (assert) => {
-  assert.expect(3);
+  assert.expect(4);
   let cardName = 'title-card';
   let payload = {
     name: 'bob'
   };
+  let options = {
+    cardOptions: {foo: 'bar'}
+  };
+  let expectedOptions = options.cardOptions;
   let TitleCard = {
     name: cardName,
     display: {
       setup(element, options, env, setupPayload) {
         assert.deepEqual(payload, setupPayload);
+        assert.deepEqual(options, expectedOptions);
         element.innerHTML = setupPayload.name;
       }
     }
@@ -166,9 +171,11 @@ test('renders a mobiledoc with card section', (assert) => {
       ]
     ]
   };
-  let rendered = renderer.render(mobiledoc, document.createElement('div'), {
+  let cards = {
     [cardName]: TitleCard
-  });
+  };
+  let element = document.createElement('div');
+  let rendered = renderer.render(mobiledoc, element, cards, options);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
   let sectionEl = rendered.childNodes[0];
