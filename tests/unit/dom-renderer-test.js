@@ -277,3 +277,41 @@ test('renders mobiledoc with lists', (assert) => {
   assert.equal(items[1].childNodes[0].textContent, 'second item',
                'correct text node for item 2');
 });
+
+test('multiple spaces should preserve whitespace with nbsps', (assert) => {
+  let space = ' ';
+  let repeat = (str, count) => {
+    let result = '';
+    while (count--) {
+      result += str;
+    }
+    return result;
+  };
+  let text = [
+    repeat(space, 4), 'some',
+    repeat(space, 5), 'text',
+    repeat(space, 6)
+  ].join('');
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [], // markers
+      [   // sections
+        [1, 'P', [
+          [[], 0, text]]
+        ]
+      ]
+    ]
+  };
+
+  let nbsp = '\u00A0';
+  let sn = ' ' + nbsp;
+  let expectedText = [
+    repeat(sn, 2), 'some',
+    repeat(sn, 2), ' ', 'text',
+    repeat(sn, 3)
+  ].join('');
+  let rendered = renderer.render(mobiledoc);
+  let textNode = rendered.firstChild.firstChild;
+  assert.equal(textNode.textContent, expectedText, 'renders the text');
+});
