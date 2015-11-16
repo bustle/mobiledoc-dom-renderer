@@ -4,7 +4,8 @@
   "description": "Renders Mobiledoc input to DOM output",
   "scripts": {
     "test": "testem ci",
-    "build": "rm -rf dist/ && broccoli build dist"
+    "build": "rm -rf dist/ && broccoli build dist",
+    "update-changelog": "./node_modules/conventional-changelog/cli.js -i CHANGELOG.md -r 0 --overwrite && git add CHANGELOG.md && git commit -m 'Update changelog'"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-multi-builder": "^0.2.6",
     "broccoli-test-builder": "^0.2.0",
+    "conventional-changelog": "^0.5.1",
     "testem": "^0.9.0-1"
   },
   "main": "dist/commonjs/mobiledoc-dom-renderer/index.js"
