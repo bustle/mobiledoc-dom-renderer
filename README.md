@@ -1,6 +1,6 @@
 ## Mobiledoc DOM Renderer [![Build Status](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer.svg?branch=master)](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer)
 
-This is a DOM renderer for the [Mobiledoc](https://github.com/bustlelabs/content-kit-editor/blob/master/MOBILEDOC.md) format used
+This is a DOM renderer for the [Mobiledoc](https://github.com/bustlelabs/mobiledoc-kit/blob/master/MOBILEDOC.md) format used
 by [Mobiledoc-Kit](https://github.com/bustlelabs/mobiledoc-kit).
 
 The renderer is a small library intended for use in browser clients.
@@ -9,7 +9,7 @@ The renderer is a small library intended for use in browser clients.
 
 ```
 var mobiledoc = {
-  version: "0.1",
+  version: "0.2.0",
   sections: [
     [         // markers
       ['B']
@@ -26,13 +26,22 @@ var mobiledoc = {
     ]
   ]
 };
-var renderer = new MobiledocDOMRenderer();
-var cards = {};
-var rendered = renderer.render(mobiledoc, document.createElement('div'), cards);
-document.getElementById('output').appendChild(rendered);
+var renderer = new MobiledocDOMRenderer({cards: []});
+var rendered = renderer.render(mobiledoc);
+var result = rendered.result;
+document.getElementById('output').appendChild(result);
 // renders <div><p><b>hello world</b></b></div>
 // into 'output' element
 ```
+
+The Renderer constructor accepts a single object with the following optional properties:
+  * `cards`: An array of card objects
+  * `cardOptions`: Options to pass to cards when they are rendered
+  * `unknownCardHandler`: A method that will be called when any unknown card is enountered
+
+The return value from `renderer.render(mobiledoc)` is an object with two properties:
+  * `result` The rendered result. A DOMNode
+  * `teardown` A teardown method that, when called, will tear down the rendered mobiledoc and call any teardown handlers that were registered by cards in the mobiledoc.
 
 ### Tests
 
