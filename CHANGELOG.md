@@ -1,6 +1,25 @@
-<a name="0.1.18"></a>
-## 0.1.18 (2015-11-16)
+<a name="0.2.1"></a>
+## 0.2.1 (2015-11-23)
 
+
+
+
+<a name="0.2.1"></a>
+## 0.2.1 (2015-11-23)
+
+
+* 0.2.1 ([cfd0a97](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/cfd0a97))
+
+
+
+<a name="0.2.0"></a>
+# 0.2.0 (2015-11-23)
+
+
+* 0.2.0 ([5849616](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/5849616))
+* Merge pull request #18 from bustlelabs/update-card-rendering-17 ([4fb4ee4](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/4fb4ee4))
+* refactor to handle new cards ([e6fd6fd](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/e6fd6fd)), closes [#17](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/17)
+* Update changelog ([7f942c6](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/7f942c6))
 
 
 
