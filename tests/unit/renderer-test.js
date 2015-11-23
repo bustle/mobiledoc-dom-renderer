@@ -1,20 +1,158 @@
 /* global QUnit */
 
-const { test } = QUnit;
+const { test, module } = QUnit;
 const MOBILEDOC_VERSION = '0.2.0';
 
 import Renderer from 'mobiledoc-dom-renderer';
+import { RENDER_TYPE } from 'mobiledoc-dom-renderer';
+
+const dataUri = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
 
 let renderer;
-QUnit.module('Unit: Mobiledoc DOM Renderer', {
+module('Unit: Mobiledoc DOM Renderer', {
   beforeEach() {
     renderer = new Renderer();
+  },
+  afterEach() {
+    if (renderer) {
+      renderer = null;
+    }
   }
+});
+
+test('rendering unknown card without unknownCardHandler throws', (assert) => {
+  let cardName = 'not-known';
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],
+      [
+        [10, cardName]
+      ]
+    ]
+  };
+  renderer = new Renderer({cards: [], unknownCardHandler: undefined});
+  assert.throws(
+    () => renderer.render(mobiledoc),
+    new RegExp(`Card "${cardName}" not found.*no unknownCardHandler`)
+  );
+});
+
+test('rendering unknown card uses unknownCardHandler', (assert) => {
+  assert.expect(5);
+
+  let cardName = 'my-card';
+  let expectedOptions = {};
+  let expectedPayload = {};
+
+  let unknownCardHandler = ({env, options, payload}) => {
+    assert.equal(env.name, cardName, 'name is correct');
+    assert.ok(!env.isInEditor, 'not in editor');
+    assert.ok(!!env.onTeardown, 'has onTeardown');
+
+    assert.deepEqual(options, expectedOptions, 'correct options');
+    assert.deepEqual(payload, expectedPayload, 'correct payload');
+  };
+
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],
+      [
+        [10, cardName, expectedPayload]
+      ]
+    ]
+  };
+  renderer = new Renderer({
+    cards: [], cardOptions: expectedOptions, unknownCardHandler
+  });
+  renderer.render(mobiledoc);
+});
+
+test('throws if card render returns invalid result', (assert) => {
+  let card = {
+    name: 'bad',
+    type: 'dom',
+    render() { return 'string'; }
+  };
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],
+      [
+        [10, card.name]
+      ]
+    ]
+  };
+
+  renderer = new Renderer({cards:[card]});
+  assert.throws(
+    () => renderer.render(mobiledoc),
+    /Card "bad" must render dom/
+  );
+});
+
+test('card may render nothing', (assert) => {
+  let card = {
+    name: 'ok',
+    type: 'dom',
+    render() {}
+  };
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],
+      [
+        [10, card.name]
+      ]
+    ]
+  };
+
+  renderer = new Renderer({cards:[card]});
+  renderer.render(mobiledoc);
+
+  assert.ok(true, 'No error thrown');
 });
 
 test('it exists', (assert) => {
   assert.ok(Renderer, 'class exists');
   assert.ok(renderer, 'instance exists');
+});
+
+test('throws if given a card with an invalid type', (assert) => {
+  let cardName = 'bad';
+  let card = {
+    name: cardName,
+    type: 'text',
+    render() {}
+  };
+  let cards = [card];
+  assert.throws(
+    () => { new Renderer({cards}) }, // jshint ignore: line
+    new RegExp(`Card "${cardName}" must be of type "${RENDER_TYPE}"`)
+  );
+});
+
+test('throws if given a card without a render method', (assert) => {
+  let cardName = 'bad';
+  let card = {
+    name: cardName,
+    type: RENDER_TYPE,
+    render: undefined
+  };
+  let cards = [card];
+  assert.throws(
+    () => { new Renderer({cards}) }, // jshint ignore: line
+    new RegExp(`Card "${cardName}" must define \`render\``)
+  );
+});
+
+test('throws if given an object of cards', (assert) => {
+  let cards = {};
+  assert.throws(
+    () => { new Renderer({cards}) }, // jshint ignore: line
+    new RegExp('`cards` must be passed as an array')
+  );
 });
 
 test('renders an empty mobiledoc', (assert) => {
@@ -25,11 +163,10 @@ test('renders an empty mobiledoc', (assert) => {
       []  // sections
     ]
   };
-  let rendered = renderer.render(mobiledoc);
+  let { result: rendered } = renderer.render(mobiledoc);
 
-  assert.ok(rendered, 'renders output');
-  assert.equal(rendered.childNodes.length, 0,
-               'has no sections');
+  assert.ok(!!rendered, 'renders result');
+  assert.equal(rendered.childNodes.length, 0, 'has no sections');
 });
 
 test('renders a mobiledoc without markers', (assert) => {
@@ -44,7 +181,8 @@ test('renders a mobiledoc without markers', (assert) => {
       ]
     ]
   };
-  let rendered = renderer.render(mobiledoc);
+  let renderResult = renderer.render(mobiledoc);
+  let { result: rendered } = renderResult;
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
   assert.equal(rendered.childNodes[0].tagName, 'P',
@@ -67,7 +205,7 @@ test('renders a mobiledoc with simple (no attributes) marker', (assert) => {
       ]
     ]
   };
-  let rendered = renderer.render(mobiledoc);
+  let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
   let sectionEl = rendered.childNodes[0];
@@ -89,7 +227,7 @@ test('renders a mobiledoc with complex (has attributes) marker', (assert) => {
       ]
     ]
   };
-  let rendered = renderer.render(mobiledoc);
+  let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
   let sectionEl = rendered.childNodes[0];
@@ -115,7 +253,7 @@ test('renders a mobiledoc with multiple markups in a section', (assert) => {
       ]
     ]
   };
-  let rendered = renderer.render(mobiledoc);
+  let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
   let sectionEl = rendered.childNodes[0];
@@ -124,42 +262,41 @@ test('renders a mobiledoc with multiple markups in a section', (assert) => {
 });
 
 test('renders a mobiledoc with image section', (assert) => {
-  let url = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
   let mobiledoc = {
     version: MOBILEDOC_VERSION,
     sections: [
       [],      // markers
       [        // sections
-        [2, url]
+        [2, dataUri]
       ]
     ]
   };
-  let rendered = renderer.render(mobiledoc);
+  let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
   let sectionEl = rendered.childNodes[0];
 
-  assert.equal(sectionEl.src, url);
+  assert.equal(sectionEl.src, dataUri);
 });
 
 test('renders a mobiledoc with card section', (assert) => {
-  assert.expect(4);
+  assert.expect(7);
   let cardName = 'title-card';
-  let payload = {
-    name: 'bob'
-  };
-  let options = {
-    cardOptions: {foo: 'bar'}
-  };
-  let expectedOptions = options.cardOptions;
+  let expectedPayload = { name: 'bob' };
+  let expectedOptions = {foo: 'bar'};
   let TitleCard = {
     name: cardName,
-    display: {
-      setup(element, options, env, setupPayload) {
-        assert.deepEqual(payload, setupPayload);
-        assert.deepEqual(options, expectedOptions);
-        element.innerHTML = setupPayload.name;
-      }
+    type: 'dom',
+    render({env, options, payload}) {
+      let {name, isInEditor, onTeardown} = env;
+      assert.equal(name, cardName, 'has name');
+      assert.ok(!isInEditor, 'not isInEditor');
+      assert.ok(!!onTeardown, 'has onTeardown');
+
+      assert.deepEqual(options, expectedOptions);
+      assert.deepEqual(payload, expectedPayload);
+
+      return document.createTextNode(payload.name);
     }
   };
   let mobiledoc = {
@@ -167,74 +304,81 @@ test('renders a mobiledoc with card section', (assert) => {
     sections: [
       [],      // markers
       [        // sections
-        [10, cardName, payload]
+        [10, cardName, expectedPayload]
       ]
     ]
   };
-  let cards = {
-    [cardName]: TitleCard
-  };
-  let element = document.createElement('div');
-  let rendered = renderer.render(mobiledoc, element, cards, options);
-  assert.equal(rendered.childNodes.length, 1,
-               'renders 1 section');
+  renderer = new Renderer({cards: [TitleCard], cardOptions: expectedOptions});
+  let { result: rendered } = renderer.render(mobiledoc);
+  assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
   let sectionEl = rendered.childNodes[0];
 
-  assert.equal(sectionEl.innerHTML, payload.name);
+  assert.equal(sectionEl.innerHTML, expectedPayload.name);
 });
 
-test('renders a mobiledoc with card section and no payload', (assert) => {
-  assert.expect(3);
-  let cardName = 'title-card';
-  let TitleCard = {
-    name: cardName,
-    display: {
-      setup(element, options, env, setupPayload) {
-        assert.deepEqual({}, setupPayload);
-        element.innerHTML = '';
-      }
-    }
-  };
-  let mobiledoc = {
-    version: MOBILEDOC_VERSION,
-    sections: [
-      [],      // markers
-      [        // sections
-        [10, cardName]
-      ]
-    ]
-  };
-  let rendered = renderer.render(mobiledoc, document.createElement('div'), {
-    [cardName]: TitleCard
-  });
-  assert.equal(rendered.childNodes.length, 1,
-               'renders 1 section');
-  let sectionEl = rendered.childNodes[0];
-
-  assert.equal(sectionEl.innerHTML, '');
-});
-
-test('when passed an array of cards, throws', (assert) => {
+test('renderResult.teardown removes rendered sections from dom', (assert) => {
   let mobiledoc = {
     version: MOBILEDOC_VERSION,
     sections: [
       [],
-      []
+      [
+        [1, 'p', [
+          [[], 0, 'Hello world']
+        ]]
+      ]
     ]
   };
-  let cards = [{name: 'test-card'}];
-  let element = document.createElement('div');
 
-  assert.throws(() => {
-    renderer.render(mobiledoc, element, cards);
-  }, /cards.*must be passed as an object/);
+  let { result: rendered, teardown } = renderer.render(mobiledoc);
+  assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
+
+  let fixture = document.getElementById('qunit-fixture');
+  fixture.appendChild(rendered);
+
+  assert.ok(fixture.childNodes.length === 1, 'precond - result is appended');
+
+  teardown();
+
+  assert.ok(fixture.childNodes.length === 0, 'rendered result removed after teardown');
 });
 
-test('renders a mobiledoc with default image section', (assert) => {
+test('card can register teardown hook', (assert) => {
+  let cardName = 'title-card';
+  let didTeardown = false;
+
+  let card = {
+    name: cardName,
+    type: 'dom',
+    render({env}) {
+      env.onTeardown(() => didTeardown = true);
+    }
+  };
+
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],
+      [
+        [10, cardName]
+      ]
+    ]
+  };
+
+  renderer = new Renderer({cards: [card]});
+  let { teardown } = renderer.render(mobiledoc);
+
+  assert.ok(!didTeardown, 'teardown not called');
+
+  teardown();
+
+  assert.ok(didTeardown, 'teardown called');
+});
+
+test('renders a mobiledoc with default image card', (assert) => {
   assert.expect(3);
   let cardName = 'image';
   let payload = {
-    src: 'http://example.org/foo.jpg'
+    src: dataUri
   };
   let mobiledoc = {
     version: MOBILEDOC_VERSION,
@@ -245,13 +389,13 @@ test('renders a mobiledoc with default image section', (assert) => {
       ]
     ]
   };
-  let rendered = renderer.render(mobiledoc, document.createElement('div'));
+  let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1,
                'renders 1 section');
   let sectionEl = rendered.childNodes[0];
 
   assert.equal(sectionEl.firstChild.tagName, 'IMG');
-  assert.equal(sectionEl.firstChild.src, 'http://example.org/foo.jpg');
+  assert.equal(sectionEl.firstChild.src, dataUri);
 });
 
 test('renders mobiledoc with lists', (assert) => {
@@ -267,7 +411,7 @@ test('renders mobiledoc with lists', (assert) => {
       ]
     ]
   };
-  const rendered = renderer.render(mobiledoc, document.createElement('div'));
+  let { result: rendered } = renderer.render(mobiledoc, document.createElement('div'));
   assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
 
   const section = rendered.childNodes[0];
@@ -312,29 +456,26 @@ test('multiple spaces should preserve whitespace with nbsps', (assert) => {
   };
 
   let nbsp = '\u00A0';
-  let sn = ' ' + nbsp;
+  let sn = space + nbsp;
   let expectedText = [
     repeat(sn, 2), 'some',
-    repeat(sn, 2), ' ', 'text',
+    repeat(sn, 2), space, 'text',
     repeat(sn, 3)
   ].join('');
-  let rendered = renderer.render(mobiledoc);
+  let { result: rendered } = renderer.render(mobiledoc);
   let textNode = rendered.firstChild.firstChild;
   assert.equal(textNode.textContent, expectedText, 'renders the text');
 });
 
 test('rendering nested mobiledocs in cards', (assert) => {
-  let renderer = new Renderer();
-
-  let cards = {
-    'nested-card': {
-      display: {
-        setup(element, options, env, payload) {
-          renderer.render(payload.mobiledoc, element, cards);
-        }
-      }
+  let cards = [{
+    name: 'nested-card',
+    type: 'dom',
+    render({payload}) {
+      let {result: rendered} = renderer.render(payload.mobiledoc);
+      return rendered;
     }
-  };
+  }];
 
   let innerMobiledoc = {
     version: MOBILEDOC_VERSION,
@@ -358,7 +499,8 @@ test('rendering nested mobiledocs in cards', (assert) => {
     ]
   };
 
-  let rendered = renderer.render(mobiledoc, document.createElement('div'), cards);
+  let renderer = new Renderer({cards});
+  let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
   let card = rendered.childNodes[0];
   assert.equal(card.childNodes.length, 1, 'card has 1 child');
@@ -384,5 +526,4 @@ test('throw when given unexpected mobiledoc version', (assert) => {
     () => renderer.render(mobiledoc),
     /Unexpected Mobiledoc version.*0.2.1/
   );
-  
 });
