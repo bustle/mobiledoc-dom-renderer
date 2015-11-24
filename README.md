@@ -43,7 +43,7 @@ The Renderer constructor accepts a single object with the following optional pro
 
 The return value from `renderer.render(mobiledoc)` is an object with two properties:
   * `result` [DOM Node] - The rendered result
-  * `teardown` [function] - When called, this function will tear down the rendered mobiledoc and call any teardown handlers that were registered by cards when they were rendererd
+  * `teardown` [function] - When called, this function will tear down the rendered mobiledoc and call any teardown handlers that were registered by cards when they were rendered
 
 ### Tests
 
