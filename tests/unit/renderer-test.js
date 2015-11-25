@@ -5,6 +5,12 @@ const MOBILEDOC_VERSION = '0.2.0';
 
 import Renderer from 'mobiledoc-dom-renderer';
 import { RENDER_TYPE } from 'mobiledoc-dom-renderer';
+import {
+  MARKUP_SECTION_TYPE,
+  LIST_SECTION_TYPE,
+  CARD_SECTION_TYPE,
+  IMAGE_SECTION_TYPE
+} from 'mobiledoc-dom-renderer/utils/section-types';
 
 const dataUri = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
 
@@ -27,7 +33,7 @@ test('rendering unknown card without unknownCardHandler throws', (assert) => {
     sections: [
       [],
       [
-        [10, cardName]
+        [CARD_SECTION_TYPE, cardName]
       ]
     ]
   };
@@ -59,7 +65,7 @@ test('rendering unknown card uses unknownCardHandler', (assert) => {
     sections: [
       [],
       [
-        [10, cardName, expectedPayload]
+        [CARD_SECTION_TYPE, cardName, expectedPayload]
       ]
     ]
   };
@@ -80,7 +86,7 @@ test('throws if card render returns invalid result', (assert) => {
     sections: [
       [],
       [
-        [10, card.name]
+        [CARD_SECTION_TYPE, card.name]
       ]
     ]
   };
@@ -103,7 +109,7 @@ test('card may render nothing', (assert) => {
     sections: [
       [],
       [
-        [10, card.name]
+        [CARD_SECTION_TYPE, card.name]
       ]
     ]
   };
@@ -175,7 +181,7 @@ test('renders a mobiledoc without markers', (assert) => {
     sections: [
       [], // markers
       [   // sections
-        [1, 'P', [
+        [MARKUP_SECTION_TYPE, 'P', [
           [[], 0, 'hello world']]
         ]
       ]
@@ -199,7 +205,7 @@ test('renders a mobiledoc with simple (no attributes) marker', (assert) => {
         ['B'],
       ],
       [        // sections
-        [1, 'P', [
+        [MARKUP_SECTION_TYPE, 'P', [
           [[0], 1, 'hello world']]
         ]
       ]
@@ -221,7 +227,7 @@ test('renders a mobiledoc with complex (has attributes) marker', (assert) => {
         ['A', ['href', 'http://google.com']],
       ],
       [        // sections
-        [1, 'P', [
+        [MARKUP_SECTION_TYPE, 'P', [
             [[0], 1, 'hello world']
         ]]
       ]
@@ -244,7 +250,7 @@ test('renders a mobiledoc with multiple markups in a section', (assert) => {
         ['I']
       ],
       [        // sections
-        [1, 'P', [
+        [MARKUP_SECTION_TYPE, 'P', [
           [[0], 0, 'hello '], // b
           [[1], 0, 'brave '], // b+i
           [[], 1, 'new '], // close i
@@ -267,7 +273,7 @@ test('renders a mobiledoc with image section', (assert) => {
     sections: [
       [],      // markers
       [        // sections
-        [2, dataUri]
+        [IMAGE_SECTION_TYPE, dataUri]
       ]
     ]
   };
@@ -304,7 +310,7 @@ test('renders a mobiledoc with card section', (assert) => {
     sections: [
       [],      // markers
       [        // sections
-        [10, cardName, expectedPayload]
+        [CARD_SECTION_TYPE, cardName, expectedPayload]
       ]
     ]
   };
@@ -322,7 +328,7 @@ test('renderResult.teardown removes rendered sections from dom', (assert) => {
     sections: [
       [],
       [
-        [1, 'p', [
+        [MARKUP_SECTION_TYPE, 'p', [
           [[], 0, 'Hello world']
         ]]
       ]
@@ -359,7 +365,7 @@ test('card can register teardown hook', (assert) => {
     sections: [
       [],
       [
-        [10, cardName]
+        [CARD_SECTION_TYPE, cardName]
       ]
     ]
   };
@@ -385,7 +391,7 @@ test('renders a mobiledoc with default image card', (assert) => {
     sections: [
       [],      // markers
       [        // sections
-        [10, cardName, payload]
+        [CARD_SECTION_TYPE, cardName, payload]
       ]
     ]
   };
@@ -404,7 +410,7 @@ test('renders mobiledoc with lists', (assert) => {
     sections: [
       [],
       [
-        [3, 'ul', [
+        [LIST_SECTION_TYPE, 'ul', [
           [[[], 0, 'first item']],
           [[[], 0, 'second item']],
         ]]
@@ -448,7 +454,7 @@ test('multiple spaces should preserve whitespace with nbsps', (assert) => {
     sections: [
       [], // markers
       [   // sections
-        [1, 'P', [
+        [MARKUP_SECTION_TYPE, 'P', [
           [[], 0, text]]
         ]
       ]
@@ -482,7 +488,7 @@ test('rendering nested mobiledocs in cards', (assert) => {
     sections: [
       [], // markers
       [   // sections
-        [1, 'P', [
+        [MARKUP_SECTION_TYPE, 'P', [
           [[], 0, 'hello world']]
         ]
       ]
@@ -494,7 +500,7 @@ test('rendering nested mobiledocs in cards', (assert) => {
     sections: [
       [], // markers
       [   // sections
-        [10, 'nested-card', {mobiledoc: innerMobiledoc}]
+        [CARD_SECTION_TYPE, 'nested-card', {mobiledoc: innerMobiledoc}]
       ]
     ]
   };
@@ -526,4 +532,49 @@ test('throw when given unexpected mobiledoc version', (assert) => {
     () => renderer.render(mobiledoc),
     /Unexpected Mobiledoc version.*0.2.1/
   );
+});
+
+test('XSS: unexpected markup and list section tag names are not renderered', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [],
+      [
+        [MARKUP_SECTION_TYPE, 'script', [
+          [[], 0, 'alert("markup section XSS")']
+        ]],
+        [LIST_SECTION_TYPE, 'script', [
+          [[[], 0, 'alert("list section XSS")']]
+        ]]
+      ]
+    ]
+  };
+  let { result } = renderer.render(mobiledoc);
+  let scripts = result.querySelectorAll('script');
+  assert.ok(!scripts.length, 'no script tag rendered');
+  document.getElementById('qunit-fixture').appendChild(result);
+});
+
+test('XSS: unexpected markup types are not rendered', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [
+        ['b'], // valid
+        ['em'], // valid
+        ['script'] // invalid
+      ],
+      [
+        [MARKUP_SECTION_TYPE, 'p', [
+          [[0], 0, 'bold text'],
+          [[1,2], 3, 'alert("markup XSS")'],
+          [[], 0, 'plain text']
+        ]]
+      ]
+    ]
+  };
+  let { result } = renderer.render(mobiledoc);
+  let script = result.querySelector('script');
+  assert.ok(!script, 'no script tags rendered');
+  document.getElementById('qunit-fixture').appendChild(result);
 });
