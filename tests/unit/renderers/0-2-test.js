@@ -14,7 +14,7 @@ const MOBILEDOC_VERSION = '0.2.0';
 const dataUri = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
 
 let renderer;
-module('Unit: Mobiledoc DOM Renderer', {
+module('Unit: Mobiledoc DOM Renderer - 0.2', {
   beforeEach() {
     renderer = new Renderer();
   }
