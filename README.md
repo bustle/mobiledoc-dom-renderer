@@ -38,12 +38,38 @@ document.getElementById('output').appendChild(result);
 
 The Renderer constructor accepts a single object with the following optional properties:
   * `cards` [array] - The list of card objects that the renderer may encounter in the mobiledoc
-  * `cardOptions` [object] - Options to pass to cards when they are rendered
+  * `atoms` [array] - The list of atom objects that the renderer may encounter in the mobiledoc
+  * `cardOptions` [object] - Options to pass to cards and atoms when they are rendered
   * `unknownCardHandler` [function] - Will be called when any unknown card is enountered
+  * `unknownAtomHandler` [function] - Will be called when any unknown atom is enountered
+  * `sectionElementRenderer` [object] - A map of hooks for section element rendering.
+    * Valid keys are P, H1, H2, H3, BLOCKQUOTE, PULL-QUOTE
+    * A valid value is a function that returns an element
 
 The return value from `renderer.render(mobiledoc)` is an object with two properties:
   * `result` [DOM Node] - The rendered result
   * `teardown` [function] - When called, this function will tear down the rendered mobiledoc and call any teardown handlers that were registered by cards when they were rendered
+
+#### sectionElementRenderer
+
+Use this renderer option to customize what element is used when rendering
+a section.
+
+```
+var renderer = new MobiledocDOMRenderer({
+  sectionElementRenderer: {
+    P: function() { return document.createElement('span'); },
+    H1: function() { return document.createElement('h2'); },
+    H2: function() {
+      var element = document.createElement('h2');
+      element.setAttribute('class', 'subheadline');
+      return element;
+    }
+    /* Valid keys are P, H1, H2, H3, BLOCKQUOTE, PULL-QUOTE */
+  }
+});
+var rendered = renderer.render(mobiledoc);
+```
 
 ### Tests
 
