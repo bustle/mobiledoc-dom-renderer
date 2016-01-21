@@ -310,6 +310,7 @@ test('card may render nothing', (assert) => {
 });
 
 test('rendering nested mobiledocs in cards', (assert) => {
+  let renderer;
   let cards = [{
     name: 'nested-card',
     type: 'dom',
@@ -341,7 +342,7 @@ test('rendering nested mobiledocs in cards', (assert) => {
     ]
   };
 
-  let renderer = new Renderer({cards});
+  renderer = new Renderer({cards});
   let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
   let card = rendered.childNodes[0];
@@ -566,4 +567,42 @@ test('XSS: unexpected markup types are not rendered', (assert) => {
   let script = result.querySelector('script');
   assert.ok(!script, 'no script tags rendered');
   document.getElementById('qunit-fixture').appendChild(result);
+});
+
+test('renders a mobiledoc with sectionElementRenderer', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [], // markers
+      [   // sections
+      [MARKUP_SECTION_TYPE, 'P', [
+        [[], 0, 'hello world']]
+      ],
+      [MARKUP_SECTION_TYPE, 'p', [
+        [[], 0, 'hello world']]
+      ],
+      [MARKUP_SECTION_TYPE, 'h1', [
+        [[], 0, 'hello world']]
+      ]
+      ]
+    ]
+  };
+  renderer = new Renderer({
+    sectionElementRenderer: {
+      p: () => document.createElement('pre'),
+      H1: () => document.createElement('h2')
+    }
+  });
+  let renderResult = renderer.render(mobiledoc);
+  let { result: rendered } = renderResult;
+  assert.equal(rendered.childNodes.length, 3,
+               'renders three sections');
+  assert.equal(rendered.childNodes[0].tagName, 'PRE',
+               'renders a pre');
+  assert.equal(rendered.childNodes[0].textContent, 'hello world',
+               'renders the text');
+  assert.equal(rendered.childNodes[1].tagName, 'PRE',
+               'renders a pre');
+  assert.equal(rendered.childNodes[2].tagName, 'H2',
+               'renders an h2');
 });
