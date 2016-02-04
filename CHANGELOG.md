@@ -1,6 +1,50 @@
-<a name="0.2.1"></a>
-## 0.2.1 (2015-11-23)
+<a name="0.3.0"></a>
+# 0.3.0 (2016-02-04)
 
+
+
+
+<a name="0.3.0"></a>
+# 0.3.0 (2016-02-04)
+
+
+* 0.3.0 ([c0f4364](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/c0f4364))
+
+
+
+<a name="0.3.0-beta3"></a>
+# 0.3.0-beta3 (2016-01-21)
+
+
+* 0.3.0-beta3 ([5f2e60e](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/5f2e60e))
+* Add sectionElementRenderer option ([fa2e9be](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/fa2e9be))
+* Merge pull request #22 from bustlelabs/section-tags ([3cfa4f8](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/3cfa4f8))
+
+
+
+<a name="0.3.0-beta2"></a>
+# 0.3.0-beta2 (2015-12-17)
+
+
+* 0.3.0-beta2 ([43e687c](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/43e687c))
+
+
+
+<a name="0.3.0-beta1"></a>
+# 0.3.0-beta1 (2015-12-17)
+
+
+* 0.3.0-beta1 ([ba05d16](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/ba05d16))
+* fix marker type util import ([3e11c33](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/3e11c33))
+* implement support for mobiledoc 0.3.0 and atoms ([a62b288](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/a62b288))
+* Merge pull request #19 from bustlelabs/whitelist-tag-names-xss ([1870c33](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/1870c33))
+* Merge pull request #20 from rlivsey/mobiledoc-0.3.0 ([9b44c41](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/9b44c41))
+* Merge pull request #21 from rlivsey/fix-marker-type-import ([5588e3e](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/5588e3e))
+* rearrange tests ([12f7f2b](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/12f7f2b))
+* Update changelog ([78b27a3](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/78b27a3))
+* Update README.md ([60aa048](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/60aa048))
+* Update README.md ([f26ee5d](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/f26ee5d))
+* Whitelist tag names for sections, marker types ([c693ed8](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/c693ed8))
 
 
 
