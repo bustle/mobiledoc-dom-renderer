@@ -1,4 +1,4 @@
-/* global QUnit */
+/* global QUnit, SimpleDOM */
 
 import Renderer from 'mobiledoc-dom-renderer';
 import ImageCard from 'mobiledoc-dom-renderer/cards/image';
@@ -9,6 +9,11 @@ import {
   CARD_SECTION_TYPE,
   IMAGE_SECTION_TYPE
 } from 'mobiledoc-dom-renderer/utils/section-types';
+import {
+  innerHTML,
+  outerHTML,
+  childNodesLength
+} from '../../helpers/dom';
 
 const { test, module } = QUnit;
 const MOBILEDOC_VERSION = '0.3.0';
@@ -20,11 +25,10 @@ import {
 } from 'mobiledoc-dom-renderer/utils/marker-types';
 
 let renderer;
-module('Unit: Mobiledoc DOM Renderer - 0.3', {
-  beforeEach() {
-    renderer = new Renderer();
-  }
-});
+
+// Add tests that should run with both simple-dom and
+// the window.document in this function.
+function generateTests() {
 
 test('renders an empty mobiledoc', (assert) => {
   let mobiledoc = {
@@ -37,7 +41,7 @@ test('renders an empty mobiledoc', (assert) => {
   let { result: rendered } = renderer.render(mobiledoc);
 
   assert.ok(!!rendered, 'renders result');
-  assert.equal(rendered.childNodes.length, 0, 'has no sections');
+  assert.equal(childNodesLength(rendered), 0, 'has no sections');
 });
 
 test('renders a mobiledoc without markups', (assert) => {
@@ -54,11 +58,11 @@ test('renders a mobiledoc without markups', (assert) => {
   };
   let renderResult = renderer.render(mobiledoc);
   let { result: rendered } = renderResult;
-  assert.equal(rendered.childNodes.length, 1,
+  assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
-  assert.equal(rendered.childNodes[0].tagName, 'P',
+  assert.equal(rendered.firstChild.tagName, 'P',
                'renders a P');
-  assert.equal(rendered.childNodes[0].textContent, 'hello world',
+  assert.equal(rendered.firstChild.firstChild.nodeValue, 'hello world',
                'renders the text');
 });
 
@@ -77,11 +81,11 @@ test('renders a mobiledoc with simple (no attributes) markup', (assert) => {
     ]
   };
   let { result: rendered } = renderer.render(mobiledoc);
-  assert.equal(rendered.childNodes.length, 1,
+  assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
-  let sectionEl = rendered.childNodes[0];
+  let sectionEl = rendered.firstChild;
 
-  assert.equal(sectionEl.innerHTML, '<b>hello world</b>');
+  assert.equal(innerHTML(sectionEl), '<b>hello world</b>');
 });
 
 test('renders a mobiledoc with complex (has attributes) markup', (assert) => {
@@ -99,11 +103,11 @@ test('renders a mobiledoc with complex (has attributes) markup', (assert) => {
     ]
   };
   let { result: rendered } = renderer.render(mobiledoc);
-  assert.equal(rendered.childNodes.length, 1,
+  assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
-  let sectionEl = rendered.childNodes[0];
+  let sectionEl = rendered.firstChild;
 
-  assert.equal(sectionEl.innerHTML, '<a href="http://google.com">hello world</a>');
+  assert.equal(innerHTML(sectionEl), '<a href="http://google.com">hello world</a>');
 });
 
 test('renders a mobiledoc with multiple markups in a section', (assert) => {
@@ -125,11 +129,11 @@ test('renders a mobiledoc with multiple markups in a section', (assert) => {
     ]
   };
   let { result: rendered } = renderer.render(mobiledoc);
-  assert.equal(rendered.childNodes.length, 1,
+  assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
-  let sectionEl = rendered.childNodes[0];
+  let sectionEl = rendered.firstChild;
 
-  assert.equal(sectionEl.innerHTML, '<b>hello <i>brave new </i>world</b>');
+  assert.equal(innerHTML(sectionEl), '<b>hello <i>brave new </i>world</b>');
 });
 
 test('renders a mobiledoc with image section', (assert) => {
@@ -143,9 +147,9 @@ test('renders a mobiledoc with image section', (assert) => {
     ]
   };
   let { result: rendered } = renderer.render(mobiledoc);
-  assert.equal(rendered.childNodes.length, 1,
+  assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
-  let sectionEl = rendered.childNodes[0];
+  let sectionEl = rendered.firstChild;
 
   assert.equal(sectionEl.src, dataUri);
 });
@@ -166,9 +170,9 @@ test('renders a mobiledoc with built-in image card', (assert) => {
     ]
   };
   let { result: rendered } = renderer.render(mobiledoc);
-  assert.equal(rendered.childNodes.length, 1,
+  assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
-  let sectionEl = rendered.childNodes[0];
+  let sectionEl = rendered.firstChild;
 
   assert.equal(sectionEl.firstChild.tagName, 'IMG');
   assert.equal(sectionEl.firstChild.src, dataUri);
@@ -188,20 +192,20 @@ test('render mobiledoc with list section and list items', (assert) => {
     ]
   };
   let { result: rendered } = renderer.render(mobiledoc, document.createElement('div'));
-  assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
+  assert.equal(childNodesLength(rendered), 1, 'renders 1 section');
 
-  const section = rendered.childNodes[0];
+  const section = rendered.firstChild;
   assert.equal(section.tagName, 'UL');
 
-  const items = section.childNodes;
-  assert.equal(items.length, 2, '2 list items');
+  assert.equal(childNodesLength(section), 2, '2 list items');
 
-  assert.equal(items[0].tagName, 'LI', 'correct tagName for item 1');
-  assert.equal(items[0].childNodes[0].textContent, 'first item',
+  const items = section.childNodes;
+  assert.equal(items.item(0).tagName, 'LI', 'correct tagName for item 1');
+  assert.equal(items.item(0).firstChild.nodeValue, 'first item',
                'correct text node for item 1');
 
-  assert.equal(items[1].tagName, 'LI', 'correct tagName for item 2');
-  assert.equal(items[1].childNodes[0].textContent, 'second item',
+  assert.equal(items.item(1).tagName, 'LI', 'correct tagName for item 2');
+  assert.equal(items.item(1).firstChild.nodeValue, 'second item',
                'correct text node for item 2');
 });
 
@@ -237,10 +241,10 @@ test('renders a mobiledoc with card section', (assert) => {
 
   renderer = new Renderer({cards: [TitleCard], cardOptions: expectedOptions});
   let { result: rendered } = renderer.render(mobiledoc);
-  assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
-  let sectionEl = rendered.childNodes[0];
+  assert.equal(childNodesLength(rendered), 1, 'renders 1 section');
+  let sectionEl = rendered.firstChild;
 
-  assert.equal(sectionEl.innerHTML, expectedPayload.name);
+  assert.equal(innerHTML(sectionEl), expectedPayload.name);
 });
 
 test('throws when given invalid card type', (assert) => {
@@ -357,11 +361,11 @@ test('rendering nested mobiledocs in cards', (assert) => {
 
   renderer = new Renderer({cards});
   let { result: rendered } = renderer.render(mobiledoc);
-  assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
-  let card = rendered.childNodes[0];
-  assert.equal(card.childNodes.length, 1, 'card has 1 child');
-  assert.equal(card.childNodes[0].tagName, 'P', 'card has P child');
-  assert.equal(card.childNodes[0].innerText, 'hello world');
+  assert.equal(childNodesLength(rendered), 1, 'renders 1 section');
+  let card = rendered.firstChild;
+  assert.equal(childNodesLength(card), 1, 'card has 1 child');
+  assert.equal(card.firstChild.tagName, 'P', 'card has P child');
+  assert.equal(card.firstChild.innerText, 'hello world');
 });
 
 test('rendering unknown card without unknownCardHandler throws', (assert) => {
@@ -425,66 +429,6 @@ test('throws if given an object of cards', (assert) => {
   );
 });
 
-test('teardown removes rendered sections from dom', (assert) => {
-  let mobiledoc = {
-    version: MOBILEDOC_VERSION,
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'p', [
-        [MARKUP_MARKER_TYPE, [], 0, 'Hello world']
-      ]]
-    ]
-  };
-
-  let { result: rendered, teardown } = renderer.render(mobiledoc);
-  assert.equal(rendered.childNodes.length, 1, 'renders 1 section');
-
-  let fixture = document.getElementById('qunit-fixture');
-  fixture.appendChild(rendered);
-
-  assert.ok(fixture.childNodes.length === 1, 'precond - result is appended');
-
-  teardown();
-
-  assert.ok(fixture.childNodes.length === 0, 'rendered result removed after teardown');
-});
-
-test('teardown hook calls registered teardown methods', (assert) => {
-  let cardName = 'title-card';
-  let didTeardown = false;
-
-  let card = {
-    name: cardName,
-    type: 'dom',
-    render({env}) {
-      env.onTeardown(() => didTeardown = true);
-    }
-  };
-
-  let mobiledoc = {
-    version: MOBILEDOC_VERSION,
-    atoms: [],
-    cards: [
-      [cardName]
-    ],
-    markups: [],
-    sections: [
-      [CARD_SECTION_TYPE, 0]
-    ]
-  };
-
-  renderer = new Renderer({cards: [card]});
-  let { teardown } = renderer.render(mobiledoc);
-
-  assert.ok(!didTeardown, 'teardown not called');
-
-  teardown();
-
-  assert.ok(didTeardown, 'teardown called');
-});
-
 test('multiple spaces should preserve whitespace with nbsps', (assert) => {
   let space = ' ';
   let repeat = (str, count) => {
@@ -520,7 +464,7 @@ test('multiple spaces should preserve whitespace with nbsps', (assert) => {
   ].join('');
   let { result: rendered } = renderer.render(mobiledoc);
   let textNode = rendered.firstChild.firstChild;
-  assert.equal(textNode.textContent, expectedText, 'renders the text');
+  assert.equal(textNode.nodeValue, expectedText, 'renders the text');
 });
 
 test('throws when given unexpected mobiledoc version', (assert) => {
@@ -560,9 +504,8 @@ test('XSS: unexpected markup and list section tag names are not renderered', (as
     ]
   };
   let { result } = renderer.render(mobiledoc);
-  let scripts = result.querySelectorAll('script');
-  assert.ok(!scripts.length, 'no script tag rendered');
-  document.getElementById('qunit-fixture').appendChild(result);
+  let content = outerHTML(result);
+  assert.ok(content.indexOf('script') === -1, 'no script tag rendered');
 });
 
 test('XSS: unexpected markup types are not rendered', (assert) => {
@@ -584,12 +527,9 @@ test('XSS: unexpected markup types are not rendered', (assert) => {
     ]
   };
   let { result } = renderer.render(mobiledoc);
-  let script = result.querySelector('script');
-  assert.ok(!script, 'no script tags rendered');
-  document.getElementById('qunit-fixture').appendChild(result);
+  let content = outerHTML(result);
+  assert.ok(content.indexOf('script') === -1, 'no script tag rendered');
 });
-
-
 
 test('renders a mobiledoc with atom', (assert) => {
   let atomName = 'hello-atom';
@@ -616,7 +556,7 @@ test('renders a mobiledoc with atom', (assert) => {
   renderer = new Renderer({atoms: [atom]});
   let { result: rendered } = renderer.render(mobiledoc);
 
-  let sectionEl = rendered.childNodes[0];
+  let sectionEl = rendered.firstChild;
   assert.equal(sectionEl.textContent, 'Hello Bob');
 });
 
@@ -774,14 +714,91 @@ test('renders a mobiledoc with sectionElementRenderer', (assert) => {
   });
   let renderResult = renderer.render(mobiledoc);
   let { result: rendered } = renderResult;
-  assert.equal(rendered.childNodes.length, 3,
+  assert.equal(childNodesLength(rendered), 3,
                'renders three sections');
-  assert.equal(rendered.childNodes[0].tagName, 'PRE',
+  assert.equal(rendered.firstChild.tagName, 'PRE',
                'renders a pre');
-  assert.equal(rendered.childNodes[0].textContent, 'hello world',
+  assert.equal(rendered.firstChild.textContent, 'hello world',
                'renders the text');
-  assert.equal(rendered.childNodes[1].tagName, 'PRE',
+  assert.equal(rendered.childNodes.item(1).tagName, 'PRE',
                'renders a pre');
-  assert.equal(rendered.childNodes[2].tagName, 'H2',
+  assert.equal(rendered.childNodes.item(2).tagName, 'H2',
                'renders an h2');
 });
+}
+
+module('Unit: Mobiledoc DOM Renderer - 0.3', {
+  beforeEach() {
+    renderer = new Renderer();
+  }
+});
+
+generateTests();
+
+test('teardown removes rendered sections from dom', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    atoms: [],
+    cards: [],
+    markups: [],
+    sections: [
+      [MARKUP_SECTION_TYPE, 'p', [
+        [MARKUP_MARKER_TYPE, [], 0, 'Hello world']
+      ]]
+    ]
+  };
+
+  let { result: rendered, teardown } = renderer.render(mobiledoc);
+  assert.equal(childNodesLength(rendered), 1, 'renders 1 section');
+
+  let fixture = document.getElementById('qunit-fixture');
+  fixture.appendChild(rendered);
+
+  assert.ok(childNodesLength(fixture) === 1, 'precond - result is appended');
+
+  teardown();
+
+  assert.ok(childNodesLength(fixture) === 0, 'rendered result removed after teardown');
+});
+
+test('teardown hook calls registered teardown methods', (assert) => {
+  let cardName = 'title-card';
+  let didTeardown = false;
+
+  let card = {
+    name: cardName,
+    type: 'dom',
+    render({env}) {
+      env.onTeardown(() => didTeardown = true);
+    }
+  };
+
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    atoms: [],
+    cards: [
+      [cardName]
+    ],
+    markups: [],
+    sections: [
+      [CARD_SECTION_TYPE, 0]
+    ]
+  };
+
+  renderer = new Renderer({cards: [card]});
+  let { teardown } = renderer.render(mobiledoc);
+
+  assert.ok(!didTeardown, 'teardown not called');
+
+  teardown();
+
+  assert.ok(didTeardown, 'teardown called');
+});
+
+module('Unit: Mobiledoc DOM Renderer w/ SimpleDOM - 0.3', {
+  beforeEach() {
+    renderer = new Renderer({ dom: new SimpleDOM.Document() });
+  }
+});
+
+generateTests();
