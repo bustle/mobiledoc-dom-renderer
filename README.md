@@ -9,7 +9,7 @@ The renderer is a small library intended for use in browser clients.
 
 ### Usage
 
-```
+```js
 var mobiledoc = {
   version: "0.2.0",
   sections: [
@@ -37,6 +37,7 @@ document.getElementById('output').appendChild(result);
 ```
 
 The Renderer constructor accepts a single object with the following optional properties:
+
   * `cards` [array] - The list of card objects that the renderer may encounter in the mobiledoc
   * `atoms` [array] - The list of atom objects that the renderer may encounter in the mobiledoc
   * `cardOptions` [object] - Options to pass to cards and atoms when they are rendered
@@ -45,10 +46,40 @@ The Renderer constructor accepts a single object with the following optional pro
   * `sectionElementRenderer` [object] - A map of hooks for section element rendering.
     * Valid keys are P, H1, H2, H3, BLOCKQUOTE, PULL-QUOTE
     * A valid value is a function that returns an element
+  * `dom` [object] - A native or [SimpleDOM](https://github.com/krisselden/simple-dom)
+    implementation of the DOM.
 
 The return value from `renderer.render(mobiledoc)` is an object with two properties:
   * `result` [DOM Node] - The rendered result
   * `teardown` [function] - When called, this function will tear down the rendered mobiledoc and call any teardown handlers that were registered by cards when they were rendered
+
+#### Rendering HTML
+
+In a browser, rendering to HTML is simple:
+
+```js
+var renderer = new MobiledocDOMRenderer();
+var rendered = renderer.render(mobiledoc);
+var html = rendered.result.outerHTML;
+```
+
+However on the server in Node.js, native DOM APIs are not available. To make
+server-rendering easy, this DOM
+renderer is [SimpleDOM](https://github.com/krisselden/simple-dom)
+compatible. You may pass an instance of a SimpleDOM document and serialize
+its output. For example:
+
+```js
+var renderer = new MobiledocDOMRenderer({
+  dom: new SimpleDOM.Document()
+});
+var rendered = renderer.render(mobiledoc);
+var serializer = new SimpleDOM.HTMLSerializer([]);
+var html = serializer.serializeChildren(rendered.result);
+```
+
+This usage of the DOM renderer for rendering HTML has the advantage of allowing
+developers to easily implement cards that work in a server and client context.
 
 #### sectionElementRenderer
 
