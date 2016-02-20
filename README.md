@@ -45,6 +45,7 @@ The Renderer constructor accepts a single object with the following optional pro
   * `unknownAtomHandler` [function] - Will be called when any unknown atom is enountered
   * `sectionElementRenderer` [object] - A map of hooks for section element rendering.
     * Valid keys are P, H1, H2, H3, BLOCKQUOTE, PULL-QUOTE
+    * Arguments are `tagName, dom`
     * A valid value is a function that returns an element
   * `dom` [object] - A native or [SimpleDOM](https://github.com/krisselden/simple-dom)
     implementation of the DOM.
@@ -89,10 +90,10 @@ a section.
 ```
 var renderer = new MobiledocDOMRenderer({
   sectionElementRenderer: {
-    P: function() { return document.createElement('span'); },
-    H1: function() { return document.createElement('h2'); },
-    H2: function() {
-      var element = document.createElement('h2');
+    P: function(_, dom) { return dom.createElement('span'); },
+    H1: function(_, dom) { return dom.createElement('h2'); },
+    H2: function(tagName, dom) {
+      var element = dom.createElement(tagName);
       element.setAttribute('class', 'subheadline');
       return element;
     }
