@@ -709,7 +709,7 @@ test('renders a mobiledoc with sectionElementRenderer', (assert) => {
   renderer = new Renderer({
     sectionElementRenderer: {
       p: () => document.createElement('pre'),
-      H1: () => document.createElement('h2')
+      H1: (tagName, dom) => dom.createElement('h2')
     }
   });
   let renderResult = renderer.render(mobiledoc);
