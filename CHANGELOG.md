@@ -1,6 +1,55 @@
-<a name="0.3.0"></a>
-# 0.3.0 (2016-02-04)
+<a name="0.4.0"></a>
+# 0.4.0 (2016-03-02)
 
+
+
+
+<a name="0.4.0"></a>
+# 0.4.0 (2016-02-21)
+
+
+* 0.4.0 ([c426575](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/c426575))
+* Use strict in brocfile ([bba53ff](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/bba53ff))
+
+
+
+<a name="0.4.0-beta4"></a>
+# 0.4.0-beta4 (2016-02-20)
+
+
+* 0.4.0-beta4 ([dc07520](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/dc07520))
+* Create section element with correct args ([6f8df27](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/6f8df27))
+
+
+
+<a name="0.4.0-beta3"></a>
+# 0.4.0-beta3 (2016-02-20)
+
+
+* 0.4.0-beta3 ([4b83f54](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/4b83f54))
+* Document rendering HTML ([2d2a8f7](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/2d2a8f7))
+* Merge pull request #25 from bustlelabs/pass-dom-sectionelement ([a5bc340](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/a5bc340))
+* Pass dom to sectionElementRenderers ([dc20d01](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/dc20d01))
+
+
+
+<a name="0.4.0-beta2"></a>
+# 0.4.0-beta2 (2016-02-19)
+
+
+* 0.4.0-beta2 ([387c331](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/387c331))
+* Node-safe window check ([6f0e6ce](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/6f0e6ce))
+
+
+
+<a name="0.4.0-beta1"></a>
+# 0.4.0-beta1 (2016-02-11)
+
+
+* Add dom option for renderer, SimpleDOM tests ([0ed823b](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/0ed823b))
+* Merge pull request #23 from bustlelabs/simpledom-tests ([d70c9ad](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/d70c9ad))
+* Update changelog ([85c42e9](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/85c42e9))
+* v0.4.0-beta1 ([4fc9c2d](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/4fc9c2d))
 
 
 
