@@ -60,6 +60,27 @@ test('renders a mobiledoc without markups', (assert) => {
                'renders the text');
 });
 
+test('renders markup section "pull-quote" as div with class', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [], // markers
+      [   // sections
+        [MARKUP_SECTION_TYPE, 'pull-quote', [
+          [[], 0, 'hello world']]
+        ]
+      ]
+    ]
+  };
+  let { result: rendered } = renderer.render(mobiledoc);
+  assert.equal(childNodesLength(rendered), 1,
+               'renders 1 section');
+  let sectionEl = rendered.firstChild;
+
+  assert.equal(outerHTML(sectionEl), '<div class="pull-quote">hello world</div>');
+});
+
+
 test('renders a mobiledoc with simple (no attributes) markup', (assert) => {
   let mobiledoc = {
     version: MOBILEDOC_VERSION,
