@@ -1,6 +1,17 @@
-<a name="0.4.0"></a>
-# 0.4.0 (2016-03-02)
+<a name="0.4.1"></a>
+## 0.4.1 (2016-03-11)
 
+
+
+
+<a name="0.4.1"></a>
+## 0.4.1 (2016-03-11)
+
+
+* 0.4.1 ([d350c73](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/d350c73))
+* Merge pull request #27 from bustlelabs/render-pull-quote-markup-section ([31702c6](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/31702c6))
+* Render pull-quote as <div class="pull-quote" ([638f46d](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/638f46d)), closes [#26](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/26)
+* Update changelog ([72ed2a5](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/72ed2a5))
 
 
 
