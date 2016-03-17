@@ -11,19 +11,17 @@ The renderer is a small library intended for use in browser clients.
 
 ```js
 var mobiledoc = {
-  version: "0.2.0",
+  version: "0.3.0",
+  markups: ["B"],
+  atoms: [],
+  cards: [],
   sections: [
-    [         // markers
-      ['B']
-    ],
-    [         // sections
-      [1, 'P', [ // array of markups
-        // markup
-        [
-          [0],          // open markers (by index)
-          0,            // close count
-          'hello world'
-        ]
+    [1, 'P', [ // array of markers
+      // marker
+      [ 0,            // marker type 0 (standard text)
+        [0],          // open markups (by index)
+        0,            // close count
+        'hello world'
       ]
     ]
   ]
