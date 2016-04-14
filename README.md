@@ -110,7 +110,7 @@ var rendered = renderer.render(mobiledoc);
 * Update version in `package.json`
 * `npm run build`
 * `npm run update-changelog`
-* `git commit -m 'v<version>'` # e.g. git commit -m 'v1.2.0'
+* `git commit -am 'v<version>'` # e.g. git commit -m 'v1.2.0'
 * `git tag v<version>`
 * `git push --tags`
 * `npm publish`
