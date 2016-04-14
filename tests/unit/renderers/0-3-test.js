@@ -194,8 +194,8 @@ test('renders a mobiledoc with built-in image card', (assert) => {
                'renders 1 section');
   let sectionEl = rendered.firstChild;
 
-  assert.equal(sectionEl.firstChild.tagName, 'IMG');
-  assert.equal(sectionEl.firstChild.src, dataUri);
+  assert.equal(sectionEl.tagName, 'IMG');
+  assert.equal(sectionEl.src, dataUri);
 });
 
 test('render mobiledoc with list section and list items', (assert) => {
@@ -262,9 +262,7 @@ test('renders a mobiledoc with card section', (assert) => {
   renderer = new Renderer({cards: [TitleCard], cardOptions: expectedOptions});
   let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(childNodesLength(rendered), 1, 'renders 1 section');
-  let sectionEl = rendered.firstChild;
-
-  assert.equal(innerHTML(sectionEl), expectedPayload.name);
+  assert.equal(innerHTML(rendered), expectedPayload.name);
 });
 
 test('throws when given invalid card type', (assert) => {
@@ -384,8 +382,8 @@ test('rendering nested mobiledocs in cards', (assert) => {
   assert.equal(childNodesLength(rendered), 1, 'renders 1 section');
   let card = rendered.firstChild;
   assert.equal(childNodesLength(card), 1, 'card has 1 child');
-  assert.equal(card.firstChild.tagName, 'P', 'card has P child');
-  assert.equal(card.firstChild.innerText, 'hello world');
+  assert.equal(card.tagName, 'P', 'card has P child');
+  assert.equal(card.innerText, 'hello world');
 });
 
 test('rendering unknown card without unknownCardHandler throws', (assert) => {
