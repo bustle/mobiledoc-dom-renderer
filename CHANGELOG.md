@@ -1,3 +1,11 @@
+<a name="0.5.1"></a>
+## 0.5.1 (2016-05-12)
+
+* [bugfix] Pass dom, isInEditor args to atoms ([6c98424](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/6c98424))
+* [docs] minor change to release process in readme ([b637a47](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/b637a47))
+
+
+
 <a name="0.5.0"></a>
 # 0.5.0 (2016-04-14)
 
@@ -5,6 +13,7 @@
 * Update changelog ([1505a05](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/1505a05))
 * update conventional-changelog dep and change release steps in readme ([6fd519c](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/6fd519c))
 * Update mobiledoc version example to 0.3.0 ([22f2de3](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/22f2de3))
+* v0.5.0 ([e878ad5](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/e878ad5))
 
 
 
