@@ -230,10 +230,12 @@ test('render mobiledoc with list section and list items', (assert) => {
 });
 
 test('renders a mobiledoc with card section', (assert) => {
-  assert.expect(7);
+  assert.expect(8);
   let cardName = 'title-card';
   let expectedPayload = { name: 'bob' };
   let expectedOptions = { foo: 'bar' };
+  let expectedDom = window.document;
+
   let TitleCard = {
     name: cardName,
     type: 'dom',
@@ -243,6 +245,7 @@ test('renders a mobiledoc with card section', (assert) => {
       assert.equal(env.name, cardName, 'correct name');
       assert.ok(!env.isInEditor, 'isInEditor correct');
       assert.ok(!!env.onTeardown, 'has onTeardown hook');
+      assert.deepEqual(env.dom, expectedDom, 'env has dom');
 
       return document.createTextNode(payload.name);
     }
@@ -259,7 +262,7 @@ test('renders a mobiledoc with card section', (assert) => {
     ]
   };
 
-  renderer = new Renderer({cards: [TitleCard], cardOptions: expectedOptions});
+  renderer = new Renderer({cards: [TitleCard], cardOptions: expectedOptions, dom: expectedDom});
   let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(childNodesLength(rendered), 1, 'renders 1 section');
   assert.equal(innerHTML(rendered), expectedPayload.name);
@@ -550,18 +553,32 @@ test('XSS: unexpected markup types are not rendered', (assert) => {
 });
 
 test('renders a mobiledoc with atom', (assert) => {
+  assert.expect(8);
   let atomName = 'hello-atom';
+  let expectedPayload = { name: 'bob' };
+  let expectedOptions = { foo: 'bar' };
+  let expectedValue = '@BOB';
+  let expectedDom = window.document;
+
   let atom = {
     name: atomName,
     type: 'dom',
-    render({ value }) {
+    render({ env, payload, value, options }) {
+      assert.deepEqual(payload, expectedPayload, 'correct payload');
+      assert.deepEqual(options, expectedOptions, 'correct options');
+      assert.equal(value, expectedValue, 'correct value');
+      assert.equal(env.name, atomName, 'correct name');
+      assert.ok(!env.isInEditor, 'isInEditor correct');
+      assert.ok(!!env.onTeardown, 'has onTeardown hook');
+      assert.deepEqual(env.dom, expectedDom, 'env has dom');
+
       return document.createTextNode(`Hello ${value}`);
     }
   };
   let mobiledoc = {
     version: MOBILEDOC_VERSION,
     atoms: [
-      ['hello-atom', 'Bob', { id: 42 }],
+      ['hello-atom', expectedValue, expectedPayload],
     ],
     cards: [],
     markups: [],
@@ -571,11 +588,11 @@ test('renders a mobiledoc with atom', (assert) => {
       ]
     ]
   };
-  renderer = new Renderer({atoms: [atom]});
+  renderer = new Renderer({atoms: [atom], cardOptions: expectedOptions, dom: expectedDom});
   let { result: rendered } = renderer.render(mobiledoc);
 
   let sectionEl = rendered.firstChild;
-  assert.equal(sectionEl.textContent, 'Hello Bob');
+  assert.equal(sectionEl.textContent, 'Hello ' + expectedValue);
 });
 
 
