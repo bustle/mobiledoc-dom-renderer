@@ -779,7 +779,7 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
   };
   renderer = new Renderer({
     markupElementRenderer: {
-      a: (markertype, dom) => {
+      A: (markertype, dom) => {
         let [tagName, attributes] = markertype;
         let element = dom.createElement('span');
         element.setAttribute('data-tag', tagName);
@@ -791,14 +791,16 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
   let renderResult = renderer.render(mobiledoc);
   let { result: rendered } = renderResult;
 
-  assert.equal(rendered.firstChild.childNodes[0].textContent, 'Lorem ipsum ',
-               'renders text');
+  assert.equal(rendered.firstChild.childNodes[1].textContent, 'dolor',
+               'renders text inside of marker');
   assert.equal(rendered.firstChild.childNodes[1].tagName, 'SPAN',
                'transforms markup nodes');
   assert.propEqual(rendered.firstChild.childNodes[1].dataset, {tag: "a", href: "#foo"},
                    'passes original tag and attributes to transform');
+  assert.equal(rendered.firstChild.childNodes[0].textContent, 'Lorem ipsum ',
+               'renders plain text nodes');
   assert.equal(rendered.firstChild.childNodes[2].nodeType, 3,
-               'renders text nodes as text nodes');
+               'renders text nodes as proper type');
 });
 }
 

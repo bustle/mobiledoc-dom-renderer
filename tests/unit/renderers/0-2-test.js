@@ -571,6 +571,47 @@ test('renders a mobiledoc with sectionElementRenderer', (assert) => {
                'renders an h2');
 });
 
+test('renders a mobiledoc with markupElementRenderer', (assert) => {
+  let mobiledoc = {
+    "version": MOBILEDOC_VERSION,
+    "sections": [
+      [
+        ["A", [ "href", "#foo" ]]
+      ],
+      [
+        [MARKUP_SECTION_TYPE, "p", [
+          [[], 0, "Lorem ipsum "],
+          [[0], 1, "dolor"],
+          [[], 0, " sit amet."]]
+        ]
+      ]
+    ]
+  };
+  renderer = new Renderer({
+    markupElementRenderer: {
+      A: (markertype, dom) => {
+        let [tagName, attributes] = markertype;
+        let element = dom.createElement('span');
+        element.setAttribute('data-tag', tagName);
+        element.setAttribute('data-href', attributes[1]);
+        return element;
+      }
+    }
+  });
+  let renderResult = renderer.render(mobiledoc);
+  let { result: rendered } = renderResult;
+
+  assert.equal(rendered.firstChild.childNodes[1].textContent, 'dolor',
+               'renders text inside of marker');
+  assert.equal(rendered.firstChild.childNodes[1].tagName, 'SPAN',
+               'transforms markup nodes');
+  assert.propEqual(rendered.firstChild.childNodes[1].dataset, {tag: "A", href: "#foo"},
+                   'passes original tag and attributes to transform');
+  assert.equal(rendered.firstChild.childNodes[0].textContent, 'Lorem ipsum ',
+               'renders plain text nodes');
+  assert.equal(rendered.firstChild.childNodes[2].nodeType, 3,
+               'renders text nodes as proper type');
+});
 }
 
 module('Unit: Mobiledoc DOM Renderer - 0.2', {
