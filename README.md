@@ -101,6 +101,34 @@ var renderer = new MobiledocDOMRenderer({
 var rendered = renderer.render(mobiledoc);
 ```
 
+#### markupElementRenderer
+
+Use this renderer option to customize what inline tags are used when renderin
+a section's content.
+
+```
+var renderer = new MobiledocDOMRenderer({
+  markupElementRenderer: {
+    B: function(_, dom) { return dom.createElement('strong'); },
+    A: function(markerType, dom) {
+      let [tagName, attributes] = markerType;
+      attributes = attributes || [];
+      let element = dom.createElement(tagName);
+
+      for (let i=0,l=attributes.length; i<l; i=i+2) {
+        let propName = attributes[i],
+        propValue = attributes[i+1];
+        element.setAttribute(propName, propValue);
+      }
+
+      element.setAttribute('rel', 'nofollow');
+      return element;
+    }
+  }
+});
+var renderer = renderer.render(mobiledoc);
+```
+
 ### Tests
 
  * `npm test`
