@@ -107,10 +107,6 @@ var rendered = renderer.render(mobiledoc);
 
 ### Releasing
 
-* Update version in `package.json`
-* `npm run build`
-* `npm run update-changelog`
-* `git commit -am 'v<version>'` # e.g. git commit -m 'v1.2.0'
-* `git tag v<version>`
+* Use `np` (install with `npm install -g np`)
+* `np <version>` (e.g. `np 0.5.2`)
 * `git push --tags`
-* `npm publish`
