@@ -630,7 +630,7 @@ test('unexpected markup types are not passed to markup renderer', (assert) => {
   };
   renderer = new Renderer({
     markupElementRenderer: {
-      A: (tagName, dom) => {
+      SCRIPT: (tagName, dom) => {
         return dom.createElement('script');
       }
     }
