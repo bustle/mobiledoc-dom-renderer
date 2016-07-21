@@ -103,7 +103,7 @@ var rendered = renderer.render(mobiledoc);
 
 #### markupElementRenderer
 
-Use this renderer option to customize what inline tags are used when renderin
+Use this renderer option to customize what inline tags are used when rendering
 a section's content.
 
 ```
