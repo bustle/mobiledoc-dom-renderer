@@ -762,6 +762,73 @@ test('renders a mobiledoc with sectionElementRenderer', (assert) => {
   assert.equal(rendered.childNodes.item(2).tagName, 'H2',
                'renders an h2');
 });
+
+test('renders a mobiledoc with markupElementRenderer', (assert) => {
+  let mobiledoc = {
+    "version": MOBILEDOC_VERSION,
+    "atoms": [],
+    "cards": [],
+    "markups": [
+      ["a", [ "href", "#foo" ]]
+    ],
+    "sections": [
+      [MARKUP_SECTION_TYPE, "p", [
+        [MARKUP_MARKER_TYPE, [], 0, "Lorem ipsum "],
+        [MARKUP_MARKER_TYPE, [0], 1, "dolor"],
+        [MARKUP_MARKER_TYPE, [], 0, " sit amet."]]
+      ]
+    ]
+  };
+  renderer = new Renderer({
+    markupElementRenderer: {
+      A: (tagName, dom, attrs) => {
+        let element = dom.createElement('span');
+        element.setAttribute('data-tag', tagName);
+        element.setAttribute('data-href', attrs.href);
+        return element;
+      }
+    }
+  });
+  let renderResult = renderer.render(mobiledoc);
+  let { result: rendered } = renderResult;
+
+  assert.equal(rendered.firstChild.childNodes[1].textContent, 'dolor',
+               'renders text inside of marker');
+  assert.equal(rendered.firstChild.childNodes[1].tagName, 'SPAN',
+               'transforms markup nodes');
+  assert.propEqual(rendered.firstChild.childNodes[1].dataset, {tag: "a", href: "#foo"},
+                   'passes original tag and attributes to transform');
+  assert.equal(rendered.firstChild.childNodes[0].textContent, 'Lorem ipsum ',
+               'renders plain text nodes');
+  assert.equal(rendered.firstChild.childNodes[2].nodeType, 3,
+               'renders text nodes as proper type');
+});
+
+test('unexpected markup types are not handled by markup renderer', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    atoms: [],
+    cards: [],
+    markups: [
+      ['script']
+    ],
+    sections: [
+      [MARKUP_SECTION_TYPE, 'p', [
+        [MARKUP_MARKER_TYPE, [0], 1, 'alert("markup XSS")']
+      ]]
+    ]
+  };
+  renderer = new Renderer({
+    markupElementRenderer: {
+      SCRIPT: (markerType, dom) => {
+        return dom.createElement('script');
+      }
+    }
+  });
+  let { result } = renderer.render(mobiledoc);
+  let content = outerHTML(result);
+  assert.ok(content.indexOf('script') === -1, 'no script tag rendered');
+});
 }
 
 module('Unit: Mobiledoc DOM Renderer - 0.3', {
