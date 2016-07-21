@@ -591,11 +591,10 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
   };
   renderer = new Renderer({
     markupElementRenderer: {
-      A: (markertype, dom) => {
-        let [tagName, attributes] = markertype;
+      A: (tagName, dom, attrs) => {
         let element = dom.createElement('span');
         element.setAttribute('data-tag', tagName);
-        element.setAttribute('data-href', attributes[1]);
+        element.setAttribute('data-href', attrs.href);
         return element;
       }
     }
