@@ -614,6 +614,32 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
   assert.equal(rendered.firstChild.childNodes[2].nodeType, 3,
                'renders text nodes as proper type');
 });
+
+test('unexpected markup types are not passed to markup renderer', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [
+        ['script'] // invalid
+      ],
+      [
+        [MARKUP_SECTION_TYPE, 'p', [
+          [[0], 1, 'alert("markup XSS")']
+        ]]
+      ]
+    ]
+  };
+  renderer = new Renderer({
+    markupElementRenderer: {
+      A: (tagName, dom) => {
+        return dom.createElement('script');
+      }
+    }
+  });
+  let { result } = renderer.render(mobiledoc);
+  let content = outerHTML(result);
+  assert.ok(content.indexOf('script') === -1, 'no script tag rendered');
+});
 }
 
 module('Unit: Mobiledoc DOM Renderer - 0.2', {
