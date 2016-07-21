@@ -122,7 +122,7 @@ var renderer = new MobiledocDOMRenderer({
     }
   }
 });
-var renderer = renderer.render(mobiledoc);
+var rendered = renderer.render(mobiledoc);
 ```
 
 ### Tests
