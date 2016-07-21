@@ -110,15 +110,11 @@ a section's content.
 var renderer = new MobiledocDOMRenderer({
   markupElementRenderer: {
     B: function(_, dom) { return dom.createElement('strong'); },
-    A: function(markerType, dom) {
-      let [tagName, attributes] = markerType;
-      attributes = attributes || [];
+    A: function(tagName, dom, attrs={}) {
       let element = dom.createElement(tagName);
 
-      for (let i=0,l=attributes.length; i<l; i=i+2) {
-        let propName = attributes[i],
-        propValue = attributes[i+1];
-        element.setAttribute(propName, propValue);
+      for (let attr in attrs) {
+        element.setAttribute(attr, attrs[attr]);
       }
 
       element.setAttribute('rel', 'nofollow');
