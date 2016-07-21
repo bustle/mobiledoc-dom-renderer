@@ -1,7 +1,9 @@
-<a name="0.5.2"></a>
-## 0.5.2 (2016-07-20)
+<a name="0.5.3"></a>
+## 0.5.3 (2016-07-21)
 
-* 0.5.2 ([21be5b8](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/21be5b8))
+* 0.5.2 ([40cdbe5](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/40cdbe5))
+* 0.5.3 ([ad229b4](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/ad229b4))
+* Add a markup renderer option (#32) ([a368f34](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/a368f34))
 * Support didRender for latest mobiledoc-kit ([70929c6](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/70929c6))
 * Update release instructions to use `np` ([014de03](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/014de03))
 
