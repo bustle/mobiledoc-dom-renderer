@@ -1,11 +1,13 @@
 {
   "name": "mobiledoc-dom-renderer",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Renders Mobiledoc input to DOM output",
   "scripts": {
     "test": "testem ci",
     "build": "rm -rf dist/ && broccoli build dist",
-    "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s"
+    "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s",
+    "prepublish": "npm run build",
+    "postversion": "npm run update-changelog && git add CHANGELOG.md && git commit --amend --no-edit"
   },
   "repository": {
     "type": "git",

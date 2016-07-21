@@ -1,8 +1,18 @@
+<a name="0.5.2"></a>
+## 0.5.2 (2016-07-20)
+
+* 0.5.2 ([21be5b8](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/21be5b8))
+* Support didRender for latest mobiledoc-kit ([70929c6](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/70929c6))
+* Update release instructions to use `np` ([014de03](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/014de03))
+
+
+
 <a name="0.5.1"></a>
 ## 0.5.1 (2016-05-12)
 
 * [bugfix] Pass dom, isInEditor args to atoms ([6c98424](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/6c98424))
 * [docs] minor change to release process in readme ([b637a47](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/b637a47))
+* v0.5.1 ([5ddbf4c](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/5ddbf4c))
 
 
 

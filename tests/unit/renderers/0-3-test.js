@@ -230,7 +230,7 @@ test('render mobiledoc with list section and list items', (assert) => {
 });
 
 test('renders a mobiledoc with card section', (assert) => {
-  assert.expect(8);
+  assert.expect(9);
   let cardName = 'title-card';
   let expectedPayload = { name: 'bob' };
   let expectedOptions = { foo: 'bar' };
@@ -245,6 +245,7 @@ test('renders a mobiledoc with card section', (assert) => {
       assert.equal(env.name, cardName, 'correct name');
       assert.ok(!env.isInEditor, 'isInEditor correct');
       assert.ok(!!env.onTeardown, 'has onTeardown hook');
+      assert.ok(!!env.didRender, 'has didRender hook');
       assert.deepEqual(env.dom, expectedDom, 'env has dom');
 
       return document.createTextNode(payload.name);
@@ -410,7 +411,7 @@ test('rendering unknown card without unknownCardHandler throws', (assert) => {
 });
 
 test('rendering unknown card uses unknownCardHandler', (assert) => {
-  assert.expect(5);
+  assert.expect(6);
 
   let cardName = 'my-card';
   let expectedOptions = {};
@@ -420,6 +421,7 @@ test('rendering unknown card uses unknownCardHandler', (assert) => {
     assert.equal(env.name, cardName, 'name is correct');
     assert.ok(!env.isInEditor, 'not in editor');
     assert.ok(!!env.onTeardown, 'has onTeardown');
+    assert.ok(!!env.didRender, 'has didRender');
 
     assert.deepEqual(options, expectedOptions, 'correct options');
     assert.deepEqual(payload, expectedPayload, 'correct payload');
@@ -870,6 +872,39 @@ test('teardown hook calls registered teardown methods', (assert) => {
   teardown();
 
   assert.ok(didTeardown, 'teardown called');
+});
+
+test('render hook calls registered didRender callbacks', (assert) => {
+  let cardName = 'title-card';
+  let didRender = false;
+
+  let card = {
+    name: cardName,
+    type: 'dom',
+    render({env}) {
+      env.didRender(() => didRender = true);
+    }
+  };
+
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    atoms: [],
+    cards: [
+      [cardName]
+    ],
+    markups: [],
+    sections: [
+      [CARD_SECTION_TYPE, 0]
+    ]
+  };
+
+  renderer = new Renderer({cards: [card]});
+
+  assert.ok(!didRender, 'didRender not called');
+
+  renderer.render(mobiledoc);
+
+  assert.ok(!!didRender, 'didRender called');
 });
 
 module('Unit: Mobiledoc DOM Renderer w/ SimpleDOM - 0.3', {
