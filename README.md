@@ -45,6 +45,10 @@ The Renderer constructor accepts a single object with the following optional pro
     * Valid keys are P, H1, H2, H3, BLOCKQUOTE, PULL-QUOTE
     * Arguments are `tagName, dom`
     * A valid value is a function that returns an element
+  * `markupElementRenderer` [object] - A map of hooks for inline element rendering.
+    * Valid keys are B, I, STRONG, EM, A, U, SUB, SUP, S
+    * Arguments are `tagName, dom, attributes={}`
+    * A valid value is a function that returns an element
   * `dom` [object] - A native or [SimpleDOM](https://github.com/krisselden/simple-dom)
     implementation of the DOM.
 
