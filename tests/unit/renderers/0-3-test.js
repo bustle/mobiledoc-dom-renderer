@@ -804,6 +804,49 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
                'renders text nodes as proper type');
 });
 
+test('passes cardOptions to markupElementRenderer and sectionElementRenderer', (assert) => {
+  let passedSectionCardOptions, passedMarkupCardOptions;
+  let cardOptions = {};
+
+  let mobiledoc = {
+    "version": MOBILEDOC_VERSION,
+    "atoms": [],
+    "cards": [],
+    "markups": [
+      ["a", [ "href", "#foo" ]]
+    ],
+    "sections": [
+      [MARKUP_SECTION_TYPE, "p", [
+        [MARKUP_MARKER_TYPE, [], 0, "Lorem ipsum "],
+        [MARKUP_MARKER_TYPE, [0], 1, "dolor"],
+        [MARKUP_MARKER_TYPE, [], 0, " sit amet."]]
+      ]
+    ]
+  };
+  renderer = new Renderer({
+    cardOptions,
+    markupElementRenderer: {
+      A: (tagName, dom, attrs, cardOptions) => {
+        passedMarkupCardOptions = cardOptions;
+        return dom.createElement('a');
+      }
+    },
+    sectionElementRenderer: {
+      P: (tagName, dom, cardOptions) => {
+        passedSectionCardOptions = cardOptions;
+        return dom.createElement('p');
+      }
+    }
+  });
+
+  renderer.render(mobiledoc);
+
+  assert.ok(!!passedSectionCardOptions, 'passes cardOptions to sectionElementRenderer');
+  assert.ok(!!passedMarkupCardOptions, 'passes cardOptions to markupElementRenderer');
+  assert.deepEqual(passedSectionCardOptions, cardOptions);
+  assert.deepEqual(passedMarkupCardOptions, cardOptions);
+});
+
 test('unexpected markup types are not handled by markup renderer', (assert) => {
   let mobiledoc = {
     version: MOBILEDOC_VERSION,

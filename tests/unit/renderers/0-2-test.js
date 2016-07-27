@@ -614,6 +614,50 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
                'renders text nodes as proper type');
 });
 
+test('passes cardOptions to markupElementRenderer and sectionElementRenderer', (assert) => {
+  let passedSectionCardOptions, passedMarkupCardOptions;
+  let cardOptions = {};
+
+  let mobiledoc = {
+    "version": MOBILEDOC_VERSION,
+    "sections": [
+      [
+        ["A", [ "href", "#foo" ]]
+      ],
+      [
+        [MARKUP_SECTION_TYPE, "p", [
+          [[], 0, "Lorem ipsum "],
+          [[0], 1, "dolor"],
+          [[], 0, " sit amet."]]
+        ]
+      ]
+    ]
+  };
+  renderer = new Renderer({
+    cardOptions,
+    markupElementRenderer: {
+      A: (tagName, dom, attrs, cardOptions) => {
+        passedMarkupCardOptions = cardOptions;
+        return dom.createElement('a');
+      }
+    },
+    sectionElementRenderer: {
+      P: (tagName, dom, cardOptions) => {
+        passedSectionCardOptions = cardOptions;
+        return dom.createElement('p');
+      }
+    }
+  });
+
+  renderer.render(mobiledoc);
+
+  assert.ok(!!passedSectionCardOptions, 'passes cardOptions to sectionElementRenderer');
+  assert.ok(!!passedMarkupCardOptions, 'passes cardOptions to markupElementRenderer');
+  assert.deepEqual(passedSectionCardOptions, cardOptions);
+  assert.deepEqual(passedMarkupCardOptions, cardOptions);
+});
+
+
 test('unexpected markup types are not passed to markup renderer', (assert) => {
   let mobiledoc = {
     version: MOBILEDOC_VERSION,
