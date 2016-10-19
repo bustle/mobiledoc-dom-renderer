@@ -7,7 +7,7 @@
     "build": "rm -rf dist/ && broccoli build dist",
     "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s",
     "prepublish": "npm run build",
-    "postversion": "npm run update-changelog && git add CHANGELOG.md && git commit --amend --no-edit"
+    "version": "npm run update-changelog && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
