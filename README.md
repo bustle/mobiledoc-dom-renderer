@@ -42,11 +42,11 @@ The Renderer constructor accepts a single object with the following optional pro
   * `unknownCardHandler` [function] - Will be called when any unknown card is enountered
   * `unknownAtomHandler` [function] - Will be called when any unknown atom is enountered
   * `sectionElementRenderer` [object] - A map of hooks for section element rendering.
-    * Valid keys are P, H1, H2, H3, BLOCKQUOTE, PULL-QUOTE
+    * Valid keys are P, H1, H2, H3, H4, H5, H6, BLOCKQUOTE, ASIDE
     * Arguments are `tagName, dom`
     * A valid value is a function that returns an element
   * `markupElementRenderer` [object] - A map of hooks for inline element rendering.
-    * Valid keys are B, I, STRONG, EM, A, U, SUB, SUP, S
+    * Valid keys are B, I, STRONG, EM, A, U, SUB, SUP, S, CODE
     * Arguments are `tagName, dom, attributes={}`
     * A valid value is a function that returns an element
   * `dom` [object] - A native or [SimpleDOM](https://github.com/krisselden/simple-dom)
@@ -99,7 +99,7 @@ var renderer = new MobiledocDOMRenderer({
       element.setAttribute('class', 'subheadline');
       return element;
     }
-    /* Valid keys are P, H1, H2, H3, BLOCKQUOTE, PULL-QUOTE */
+    /* Valid keys are P, H1, H2, H3, H4, H5, H6, BLOCKQUOTE, ASIDE */
   }
 });
 var rendered = renderer.render(mobiledoc);
