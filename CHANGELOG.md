@@ -1,11 +1,15 @@
-<a name="0.5.3"></a>
-## 0.5.3 (2016-07-21)
+<a name="0.5.4"></a>
+## 0.5.4 (2016-11-15)
 
 * 0.5.2 ([40cdbe5](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/40cdbe5))
-* 0.5.3 ([ad229b4](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/ad229b4))
+* 0.5.3 ([43f7908](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/43f7908))
 * Add a markup renderer option (#32) ([a368f34](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/a368f34))
+* Document markup renderer (#33) ([2614b4e](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/2614b4e))
+* Mobiledoc 0.3.1 ([93cd8ba](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/93cd8ba))
 * Support didRender for latest mobiledoc-kit ([70929c6](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/70929c6))
 * Update release instructions to use `np` ([014de03](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/014de03))
+* Update to use yarn ([e46b453](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/e46b453))
+* chore(scripts): Use version instead of postversion npm script (#36) ([17e35de](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/17e35de))
 
 
 
