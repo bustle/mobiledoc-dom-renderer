@@ -1,6 +1,6 @@
 /* global QUnit */
 
-import { isUnsafeUri } from 'mobildoc-dom-renderer/utils/sanitization-utils';
+import { isUnsafeUri } from 'mobiledoc-dom-renderer/utils/sanitization-utils';
 
 const { test, module } = QUnit;
 
@@ -14,7 +14,7 @@ test('#isUnsafeUri', (assert) => {
 
   for (let i = 0; i < unsafe.length; i++) {
     let uri = unsafe[i];
-    assert.ok(isUnsafeUri(uri), `${uri} is unsafe`);
+    assert.ok(isUnsafeUri(uri), `${uri} should be unsafe`);
   }
 
   let safe = [
@@ -29,6 +29,6 @@ test('#isUnsafeUri', (assert) => {
 
   for (let i = 0; i < safe.length; i++) {
     let uri = safe[i];
-    assert.ok(! isUnsafeUri(uri), `${uri} is safe`);
+    assert.ok(! isUnsafeUri(uri), `${uri} should be safe`);
   }
 });
