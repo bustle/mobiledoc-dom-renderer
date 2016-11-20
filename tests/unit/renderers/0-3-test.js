@@ -595,6 +595,31 @@ test('XSS: unexpected markup types are not rendered', (assert) => {
   assert.ok(content.indexOf('script') === -1, 'no script tag rendered');
 });
 
+test('XSS: links with dangerous href values are not rendered', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION_0_3_0,
+    atoms: [],
+    cards: [],
+    markups: [
+      [
+        'a', [
+          'href',
+          'javascript:alert("link XSS")' // jshint ignore:line
+        ]
+      ]
+    ],
+    sections: [
+      [MARKUP_SECTION_TYPE, 'p', [
+        [MARKUP_MARKER_TYPE, [0], 0, 'link text'],
+        [MARKUP_MARKER_TYPE, [], 0, 'plain text']
+      ]]
+    ]
+  };
+  let { result } = renderer.render(mobiledoc);
+  let content = outerHTML(result);
+  assert.equal(content, "<p>link textplain text</p>");
+});
+
 test('renders a mobiledoc with atom', (assert) => {
   assert.expect(8);
   let atomName = 'hello-atom';
