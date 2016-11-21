@@ -9,6 +9,10 @@ const { test, module } = QUnit;
 module('Unit: Mobiledoc DOM Renderer - Sanitization utils');
 
 test('#isSafeMarker - a', (assert) => {
+  // No HREF
+  assert.ok(isSafeMarker('a', []), "Link without href attribute is safe");
+  assert.ok(isSafeMarker('a', null), "Also safe if the attrs array is 'null'");
+
   let unsafe = [
     'javascript:alert("XSS")', // jshint ignore: line
     'vbscript:alert("XSS")' // jshint ignore: line
