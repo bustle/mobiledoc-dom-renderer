@@ -1,12 +1,14 @@
 /* global QUnit */
 
-import { isUnsafeUri } from 'mobiledoc-dom-renderer/utils/sanitization-utils';
+import {
+  isSafeMarker
+} from 'mobiledoc-dom-renderer/utils/sanitization-utils';
 
 const { test, module } = QUnit;
 
 module('Unit: Mobiledoc DOM Renderer - Sanitization utils');
 
-test('#isUnsafeUri', (assert) => {
+test('#isSafeMarker - a', (assert) => {
   let unsafe = [
     'javascript:alert("XSS")', // jshint ignore: line
     'vbscript:alert("XSS")' // jshint ignore: line
@@ -14,7 +16,7 @@ test('#isUnsafeUri', (assert) => {
 
   for (let i = 0; i < unsafe.length; i++) {
     let uri = unsafe[i];
-    assert.ok(isUnsafeUri(uri), `${uri} should be unsafe`);
+    assert.ok(! isSafeMarker('a', ['href', uri]), `${uri} should be unsafe`);
   }
 
   let safe = [
@@ -29,6 +31,6 @@ test('#isUnsafeUri', (assert) => {
 
   for (let i = 0; i < safe.length; i++) {
     let uri = safe[i];
-    assert.ok(! isUnsafeUri(uri), `${uri} should be safe`);
+    assert.ok(isSafeMarker('a', ['href', uri]), `${uri} should be safe`);
   }
 });
