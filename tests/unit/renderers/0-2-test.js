@@ -578,7 +578,7 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
     "version": MOBILEDOC_VERSION,
     "sections": [
       [
-        ["A", [ "href", "#foo" ]]
+        ["A", [ "href", "https://www.google.com" ]]
       ],
       [
         [MARKUP_SECTION_TYPE, "p", [
@@ -591,13 +591,17 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
   };
   renderer = new Renderer({
     markupElementRenderer: {
-      A: (tagName, dom, attrs) => {
+      A: function(tagName, dom, attrs) {
         let element = dom.createElement('span');
         element.setAttribute('data-tag', tagName);
         element.setAttribute('data-href', attrs.href);
+        if (attrs.href.indexOf(this.cardOptions.host) === -1) {
+          element.setAttribute('target', '_blank');
+        }
         return element;
       }
-    }
+    },
+    cardOptions: { host: 'https://www.bustle.com' }
   });
   let renderResult = renderer.render(mobiledoc);
   let { result: rendered } = renderResult;
@@ -606,8 +610,10 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
                'renders text inside of marker');
   assert.equal(rendered.firstChild.childNodes[1].tagName, 'SPAN',
                'transforms markup nodes');
-  assert.propEqual(rendered.firstChild.childNodes[1].dataset, {tag: "A", href: "#foo"},
+  assert.propEqual(rendered.firstChild.childNodes[1].dataset, {tag: "A", href: "https://www.google.com"},
                    'passes original tag and attributes to transform');
+  assert.equal(rendered.firstChild.childNodes[1].attributes.target.value, '_blank',
+               'markupElementRenderer context is the Renderer');
   assert.equal(rendered.firstChild.childNodes[0].textContent, 'Lorem ipsum ',
                'renders plain text nodes');
   assert.equal(rendered.firstChild.childNodes[2].nodeType, 3,
