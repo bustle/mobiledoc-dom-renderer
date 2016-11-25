@@ -94,7 +94,7 @@ var renderer = new MobiledocDOMRenderer({
   sectionElementRenderer: {
     P: function(_, dom) { return dom.createElement('span'); },
     H1: function(_, dom) { return dom.createElement('h2'); },
-    H2: function(tagName, dom) {
+    H2: function(tagName, dom, cardOptions) {
       var element = dom.createElement(tagName);
       element.setAttribute('class', 'subheadline');
       return element;
@@ -114,7 +114,7 @@ a section's content.
 var renderer = new MobiledocDOMRenderer({
   markupElementRenderer: {
     B: function(_, dom) { return dom.createElement('strong'); },
-    A: function(tagName, dom, attrs={}) {
+    A: function(tagName, dom, attrs={}, cardOptions) {
       let element = dom.createElement(tagName);
 
       for (let attr in attrs) {
