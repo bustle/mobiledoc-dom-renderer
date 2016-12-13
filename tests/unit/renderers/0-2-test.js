@@ -11,7 +11,8 @@ import {
 import {
   innerHTML,
   outerHTML,
-  childNodesLength
+  childNodesLength,
+  escapeQuotes
 } from '../../helpers/dom';
 
 const { test, module } = QUnit;
@@ -536,11 +537,12 @@ test('XSS: unexpected markup types are not rendered', (assert) => {
 });
 
 test('XSS: links with dangerous href values are not rendered', (assert) => {
+  let unsafeHref = 'javascript:alert("link XSS")'; // jshint ignore:line
   let mobiledoc = {
     version: MOBILEDOC_VERSION,
     sections: [
       [
-        ["a", [ "href", "javascript:alert('XSS')" ]] // jshint ignore: line
+        ["a", [ "href", unsafeHref ]]
       ],
       [
         [MARKUP_SECTION_TYPE, "p", [
@@ -552,7 +554,7 @@ test('XSS: links with dangerous href values are not rendered', (assert) => {
   };
   let { result } = renderer.render(mobiledoc);
   let content = outerHTML(result);
-  assert.equal(content, "<p>link textplain text</p>");
+  assert.equal(content, `<p><a href="unsafe:${escapeQuotes(unsafeHref)}">link text</a>plain text</p>`);
 });
 
 test('renders a mobiledoc with sectionElementRenderer', (assert) => {
