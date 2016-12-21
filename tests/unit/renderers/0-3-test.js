@@ -12,7 +12,8 @@ import {
 import {
   innerHTML,
   outerHTML,
-  childNodesLength
+  childNodesLength,
+  escapeQuotes
 } from '../../helpers/dom';
 
 const { test, module } = QUnit;
@@ -593,6 +594,32 @@ test('XSS: unexpected markup types are not rendered', (assert) => {
   let { result } = renderer.render(mobiledoc);
   let content = outerHTML(result);
   assert.ok(content.indexOf('script') === -1, 'no script tag rendered');
+});
+
+test('XSS: links with dangerous href values are not rendered', (assert) => {
+  let unsafeHref = 'javascript:alert("link XSS")'; // jshint ignore:line
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION_0_3_0,
+    atoms: [],
+    cards: [],
+    markups: [
+      [
+        'a', [
+          'href',
+          unsafeHref
+        ]
+      ]
+    ],
+    sections: [
+      [MARKUP_SECTION_TYPE, 'p', [
+        [MARKUP_MARKER_TYPE, [0], 1, 'link text'],
+        [MARKUP_MARKER_TYPE, [], 0, 'plain text']
+      ]]
+    ]
+  };
+  let { result } = renderer.render(mobiledoc);
+  let content = outerHTML(result);
+  assert.equal(content, `<p><a href="unsafe:${escapeQuotes(unsafeHref)}">link text</a>plain text</p>`);
 });
 
 test('renders a mobiledoc with atom', (assert) => {

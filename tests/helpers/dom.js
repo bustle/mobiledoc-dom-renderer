@@ -29,3 +29,6 @@ export function innerHTML(parentNode) {
   return content.join('');
 }
 
+export function escapeQuotes(string) {
+  return string.replace(/"/g, '&quot;');
+}
