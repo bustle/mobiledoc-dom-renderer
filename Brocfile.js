@@ -1,6 +1,23 @@
 /* jshint node: true */
-'use strict';
+"use strict";
 
+var build = require('@glimmer/build');
+
+const buildVendorPackage = require('@glimmer/build/lib/build-vendor-package');
+const funnel = require('broccoli-funnel');
+const path = require('path');
+
+let buildOptions = {};
+
+if (process.env.BROCCOLI_ENV === 'tests') {
+  buildOptions.vendorTrees = [
+    buildVendorPackage('simple-dom')
+  ];
+}
+
+module.exports = build(buildOptions);
+
+/*
 var multiBuilder = require('broccoli-multi-builder');
 var mergeTrees = require('broccoli-merge-trees');
 var testBuilder = require('broccoli-test-builder');
@@ -22,3 +39,4 @@ module.exports = mergeTrees([
   testBuilder.build(),
   simpleDOMTree
 ]);
+*/

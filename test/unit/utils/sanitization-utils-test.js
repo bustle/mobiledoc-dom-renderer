@@ -3,7 +3,7 @@
 import {
   sanitizeAttributeValue,
   reduceAndSanitizeAttributes
-} from 'mobiledoc-dom-renderer/utils/sanitization-utils';
+} from '../../../lib/utils/sanitization-utils';
 
 const { test, module } = QUnit;
 
