@@ -6,7 +6,6 @@
     "test": "testem ci",
     "build": "rm -rf dist/ && broccoli build dist",
     "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s",
-    "prepublish": "npm run build",
     "version": "npm run update-changelog && git add CHANGELOG.md"
   },
   "repository": {
@@ -30,9 +29,10 @@
   ],
   "homepage": "https://github.com/bustlelabs/mobiledoc-dom-renderer",
   "devDependencies": {
-    "broccoli": "^0.16.3",
-    "broccoli-funnel": "^1.0.1",
-    "broccoli-merge-trees": "^0.2.1",
+    "broccoli": "^1.1.0",
+    "broccoli-cli": "^1.0.0",
+    "broccoli-funnel": "^1.1.0",
+    "broccoli-merge-trees": "^1.2.1",
     "broccoli-multi-builder": "^0.2.6",
     "broccoli-test-builder": "^0.2.0",
     "conventional-changelog": "^1.1.0",
@@ -40,5 +40,8 @@
     "simple-dom": "^0.2.7",
     "testem": "^0.9.0-1"
   },
-  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js"
+  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js",
+  "dependencies": {
+    "@glimmer/build": "^0.2.1"
+  }
 }
