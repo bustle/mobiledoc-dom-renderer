@@ -1,30 +1,30 @@
 /* global QUnit, SimpleDOM */
 
-import Renderer from 'mobiledoc-dom-renderer';
-import ImageCard from 'mobiledoc-dom-renderer/cards/image';
-import { RENDER_TYPE } from 'mobiledoc-dom-renderer';
+import Renderer from '../../../lib/index';
+import ImageCard from '../../../lib/cards/image';
+import { RENDER_TYPE } from '../../../lib/index';
 import {
   MARKUP_SECTION_TYPE,
   LIST_SECTION_TYPE,
   CARD_SECTION_TYPE,
   IMAGE_SECTION_TYPE
-} from 'mobiledoc-dom-renderer/utils/section-types';
+} from '../../../lib/utils/section-types';
 import {
   innerHTML,
   outerHTML,
   childNodesLength,
   escapeQuotes
 } from '../../helpers/dom';
+import {
+  MARKUP_MARKER_TYPE,
+  ATOM_MARKER_TYPE
+} from '../../../lib//utils/marker-types';
 
 const { test, module } = QUnit;
 const MOBILEDOC_VERSION_0_3_0 = '0.3.0';
 const MOBILEDOC_VERSION_0_3_1 = '0.3.1';
 const dataUri = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
 
-import {
-  MARKUP_MARKER_TYPE,
-  ATOM_MARKER_TYPE
-} from 'mobiledoc-dom-renderer/utils/marker-types';
 
 let renderer;
 

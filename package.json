@@ -5,6 +5,7 @@
   "scripts": {
     "test": "testem ci",
     "build": "rm -rf dist/ && broccoli build dist",
+    "build:tests": "rm -rf tests && BROCCOLI_ENV=tests broccoli build tests",
     "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s",
     "version": "npm run update-changelog && git add CHANGELOG.md"
   },

@@ -1,13 +1,13 @@
 /* global QUnit, SimpleDOM */
 
-import Renderer from 'mobiledoc-dom-renderer';
-import { RENDER_TYPE } from 'mobiledoc-dom-renderer';
+import Renderer from '../../../lib/index';
+import { RENDER_TYPE } from '../../../lib/index';
 import {
   MARKUP_SECTION_TYPE,
   LIST_SECTION_TYPE,
   CARD_SECTION_TYPE,
   IMAGE_SECTION_TYPE
-} from 'mobiledoc-dom-renderer/utils/section-types';
+} from '../../../lib/utils/section-types';
 import {
   innerHTML,
   outerHTML,

@@ -1,16 +1,9 @@
 {
   "framework": "qunit",
-  "test_page": "dist/tests/index.html",
-  "src_files": [
-    "tests/**/*.js",
-    "src/**/*.js"
-  ],
-  "before_tests": "npm run build",
-  "launch_in_ci": [
-    "PhantomJS"
-  ],
-  "launch_in_dev": [
-    "PhantomJS",
-    "Chrome"
-  ]
+  "test_page": "tests/index.html",
+  "before_tests": "npm run build:tests",
+  "src_files": ["src/**/*", "test/**/*"],
+  "launch_in_ci": ["firefox"],
+  "debug": true,
+  "port": 0
 }
