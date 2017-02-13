@@ -35,7 +35,7 @@
     "conventional-changelog": "^1.1.0",
     "conventional-changelog-cli": "^1.1.1",
     "simple-dom": "^0.3.2",
-    "testem": "^0.9.0-1"
+    "testem": "^1.15.0"
   },
   "main": "dist/commonjs/es5/index.js",
   "module": "dist/modules/es5/index.js"
