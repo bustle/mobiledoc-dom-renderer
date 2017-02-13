@@ -1,4 +1,4 @@
-/* global QUnit, SimpleDOM */
+/* global QUnit */
 
 import Renderer from '../../../lib/index';
 import ImageCard from '../../../lib/cards/image';
@@ -19,6 +19,7 @@ import {
   MARKUP_MARKER_TYPE,
   ATOM_MARKER_TYPE
 } from '../../../lib//utils/marker-types';
+import SimpleDOM from 'simple-dom';
 
 const { test, module } = QUnit;
 const MOBILEDOC_VERSION_0_3_0 = '0.3.0';

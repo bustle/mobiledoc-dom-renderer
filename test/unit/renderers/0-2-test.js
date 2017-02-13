@@ -1,4 +1,4 @@
-/* global QUnit, SimpleDOM */
+/* global QUnit */
 
 import Renderer from '../../../lib/index';
 import { RENDER_TYPE } from '../../../lib/index';
@@ -14,6 +14,7 @@ import {
   childNodesLength,
   escapeQuotes
 } from '../../helpers/dom';
+import SimpleDOM from 'simple-dom';
 
 const { test, module } = QUnit;
 const MOBILEDOC_VERSION = '0.2.0';
