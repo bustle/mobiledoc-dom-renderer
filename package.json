@@ -1,12 +1,12 @@
 {
   "name": "mobiledoc-dom-renderer",
-  "version": "0.5.4",
+  "version": "0.6.0-0",
   "description": "Renders Mobiledoc input to DOM output",
   "scripts": {
     "test": "testem ci",
     "build": "rm -rf dist/ && broccoli build dist",
+    "build:tests": "rm -rf tests && BROCCOLI_ENV=tests broccoli build tests",
     "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s",
-    "prepublish": "npm run build",
     "version": "npm run update-changelog && git add CHANGELOG.md"
   },
   "repository": {
@@ -30,15 +30,13 @@
   ],
   "homepage": "https://github.com/bustlelabs/mobiledoc-dom-renderer",
   "devDependencies": {
-    "broccoli": "^0.16.3",
-    "broccoli-funnel": "^1.0.1",
-    "broccoli-merge-trees": "^0.2.1",
-    "broccoli-multi-builder": "^0.2.6",
-    "broccoli-test-builder": "^0.2.0",
+    "@glimmer/build": "^0.2.1",
+    "broccoli": "^1.1.0",
     "conventional-changelog": "^1.1.0",
     "conventional-changelog-cli": "^1.1.1",
-    "simple-dom": "^0.2.7",
-    "testem": "^0.9.0-1"
+    "simple-dom": "^0.3.2",
+    "testem": "^1.15.0"
   },
-  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js"
+  "main": "dist/commonjs/es5/index.js",
+  "module": "dist/modules/es5/index.js"
 }
