@@ -1,8 +1,28 @@
+<a name="0.6.0-0"></a>
+# 0.6.0-0 (2017-02-14)
+
+* Add @glimmer/build. Change "main" + add "module" keys to package ([964bcd0](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/964bcd0))
+* add tsconfig, get basic glimmer-build working ([4226b06](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/4226b06))
+* Added tests for #reduceAndSanitizeAttributes ([1efce8e](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/1efce8e))
+* Build SimpleDOM vendor tree for tests ([1404bfd](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/1404bfd))
+* Cleanup for sanitization ([c81f512](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/c81f512))
+* Cover edge case. ([eb1a0d6](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/eb1a0d6))
+* Fix test that was not running. ([1a98c0e](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/1a98c0e))
+* fix up testem ([7120d9a](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/7120d9a))
+* Links with unsafe URIs are filtered out. ([ff17b95](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/ff17b95))
+* Refactor and extend to version 0.2 ([b89d508](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/b89d508))
+* Refactor href values to be sanitized ([003c749](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/003c749))
+* remove unused tests/index.html ([3683dd4](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/3683dd4))
+* WIP ~75% of tests passing -- all SimpleDOM references fail ([1476c8f](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/1476c8f))
+
+
+
 <a name="0.5.4"></a>
 ## 0.5.4 (2016-11-15)
 
 * 0.5.2 ([40cdbe5](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/40cdbe5))
 * 0.5.3 ([43f7908](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/43f7908))
+* 0.5.4 ([5730c65](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/5730c65))
 * Add a markup renderer option (#32) ([a368f34](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/a368f34))
 * Document markup renderer (#33) ([2614b4e](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/2614b4e))
 * Mobiledoc 0.3.1 ([93cd8ba](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/93cd8ba))
