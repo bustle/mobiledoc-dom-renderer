@@ -1,6 +1,15 @@
+<a name="0.6.1-0"></a>
+## 0.6.1-0 (2017-02-15)
+
+* add babel-helpers dep ([227dc86](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/227dc86))
+* use typeof check (#42) ([2170c2b](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/2170c2b)), closes [#41](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/41)
+
+
+
 <a name="0.6.0"></a>
 # 0.6.0 (2017-02-14)
 
+* 0.6.0 ([89a33b1](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/89a33b1))
 * Added tests for #reduceAndSanitizeAttributes ([1efce8e](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/1efce8e))
 * Cleanup for sanitization ([c81f512](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/c81f512))
 * Cover edge case. ([eb1a0d6](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/eb1a0d6))
