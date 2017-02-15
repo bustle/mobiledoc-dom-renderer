@@ -29,9 +29,13 @@
     "index.js"
   ],
   "homepage": "https://github.com/bustlelabs/mobiledoc-dom-renderer",
+  "dependencies": {
+    "babel-helpers": "^6.0.0"
+  },
   "devDependencies": {
     "@glimmer/build": "^0.2.1",
     "broccoli": "^1.1.0",
+    "broccoli-funnel": "^1.1.0",
     "conventional-changelog": "^1.1.0",
     "conventional-changelog-cli": "^1.1.1",
     "simple-dom": "^0.3.2",
