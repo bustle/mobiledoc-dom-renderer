@@ -1,6 +1,13 @@
+<a name="0.6.1-1"></a>
+## 0.6.1-1 (2017-02-15)
+
+
+
+
 <a name="0.6.1-0"></a>
 ## 0.6.1-0 (2017-02-15)
 
+* 0.6.1-0 ([3f656bd](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/3f656bd))
 * add babel-helpers dep ([227dc86](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/227dc86))
 * use typeof check (#42) ([2170c2b](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/2170c2b)), closes [#41](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/41)
 
