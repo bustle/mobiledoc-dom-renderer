@@ -1,6 +1,14 @@
+<a name="0.6.1-2"></a>
+## 0.6.1-2 (2017-02-15)
+
+* remove babel=helpers dep ([291f8ae](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/291f8ae))
+
+
+
 <a name="0.6.1-1"></a>
 ## 0.6.1-1 (2017-02-15)
 
+* 0.6.1-1 ([a1afd67](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/a1afd67))
 
 
 
