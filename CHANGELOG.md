@@ -1,6 +1,14 @@
+<a name="0.6.1-3"></a>
+## 0.6.1-3 (2017-02-16)
+
+* use forked glimmer-build without babel helpers ([9d88381](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/9d88381))
+
+
+
 <a name="0.6.1-2"></a>
 ## 0.6.1-2 (2017-02-15)
 
+* 0.6.1-2 ([3cca342](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/3cca342))
 * remove babel=helpers dep ([291f8ae](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/291f8ae))
 
 
