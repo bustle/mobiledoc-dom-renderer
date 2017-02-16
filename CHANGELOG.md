@@ -1,6 +1,14 @@
+<a name="0.6.2"></a>
+## 0.6.2 (2017-02-16)
+
+* prepublish ([071bcbf](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/071bcbf))
+
+
+
 <a name="0.6.1"></a>
 ## 0.6.1 (2017-02-16)
 
+* 0.6.1 ([0f8d5a6](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/0f8d5a6))
 * use forked glimmer-build without babel helpers (#45) ([f9882db](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/f9882db))
 * use typeof check (#42) ([2170c2b](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/2170c2b)), closes [#41](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/41)
 
