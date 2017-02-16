@@ -30,7 +30,7 @@
   ],
   "homepage": "https://github.com/bustlelabs/mobiledoc-dom-renderer",
   "devDependencies": {
-    "@glimmer/build": "^0.2.1",
+    "@glimmer/build": "bantic/glimmer-build#skip-babel-helpers",
     "broccoli": "^1.1.0",
     "broccoli-funnel": "^1.1.0",
     "conventional-changelog": "^1.1.0",
