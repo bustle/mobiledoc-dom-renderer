@@ -1,6 +1,14 @@
+<a name="0.6.3"></a>
+## 0.6.3 (2017-02-22)
+
+* Revert usage of glimmer/build for building (for now) (#46) ([c23676a](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/c23676a))
+
+
+
 <a name="0.6.2"></a>
 ## 0.6.2 (2017-02-16)
 
+* 0.6.2 ([49d56e7](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/49d56e7))
 * prepublish ([071bcbf](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/071bcbf))
 
 
