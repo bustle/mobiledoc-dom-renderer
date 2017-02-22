@@ -1,4 +1,4 @@
-import SimpleDOM from 'simple-dom';
+/* global SimpleDOM */
 
 export function childNodesLength(element) {
   let length = 0;

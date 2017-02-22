@@ -31,14 +31,15 @@
   ],
   "homepage": "https://github.com/bustlelabs/mobiledoc-dom-renderer",
   "devDependencies": {
-    "@glimmer/build": "bantic/glimmer-build#skip-babel-helpers",
-    "broccoli": "^1.1.0",
+    "broccoli": "^0.16.3",
     "broccoli-funnel": "^1.1.0",
+    "broccoli-merge-trees": "^0.2.1",
+    "broccoli-multi-builder": "^0.2.6",
+    "broccoli-test-builder": "^0.2.0",
     "conventional-changelog": "^1.1.0",
     "conventional-changelog-cli": "^1.1.1",
     "simple-dom": "^0.3.2",
     "testem": "^1.15.0"
   },
-  "main": "dist/commonjs/es5/index.js",
-  "module": "dist/modules/es5/index.js"
+  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js"
 }
