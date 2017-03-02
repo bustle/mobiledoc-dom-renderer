@@ -3,6 +3,7 @@
   "version": "0.6.3",
   "description": "Renders Mobiledoc input to DOM output",
   "scripts": {
+    "start": "broccoli serve",
     "test": "testem ci",
     "build": "rm -rf dist/ && broccoli build dist",
     "prepublish": "npm run build",
