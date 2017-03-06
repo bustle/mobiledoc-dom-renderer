@@ -1,6 +1,14 @@
+<a name="0.6.4-1"></a>
+## 0.6.4-1 (2017-03-06)
+
+* chore(markupSanitizer): Remove markupSanitizer in favor of markupElementRenderer (#51) ([8f359af](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/8f359af))
+
+
+
 <a name="0.6.4-0"></a>
 ## 0.6.4-0 (2017-03-06)
 
+* 0.6.4-0 ([d564abb](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/d564abb))
 * fix(href-sanitization): Accept markupSanitizer option, downcase tagName and attributeName (#50) ([aa1aedc](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/aa1aedc)), closes [#49](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/49) [#48](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/48)
 
 
