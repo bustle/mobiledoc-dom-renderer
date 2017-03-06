@@ -557,65 +557,6 @@ test('XSS: links with dangerous href values are not rendered', (assert) => {
   assert.equal(content, `<p><a href="unsafe:${escapeQuotes(unsafeHref)}">link text</a>plain text</p>`);
 });
 
-test('renderer delegates to provided "markupSanitizer"', function(assert) {
-  let called = 0;
-
-  let markupSanitizer = ({tagName, attributeName, attributeValue}) => {
-    called++;
-    return attributeValue + 'changed';
-  };
-
-  let renderer = new Renderer({markupSanitizer});
-
-  let mobiledoc = {
-    version: MOBILEDOC_VERSION,
-    sections: [
-      [
-        ["a", [ "href", 'http://google.com/' ]]
-      ],
-      [
-        [MARKUP_SECTION_TYPE, "p", [
-          [[0], 1, "hello world"]
-        ]]
-      ]
-    ]
-  };
-  let { result } = renderer.render(mobiledoc);
-  let content = outerHTML(result);
-  assert.equal(content, `<p><a href="http://google.com/changed">hello world</a></p>`);
-  assert.equal(called, 1, 'markupSanitizer called');
-});
-
-test('when markupSanitizer returns nothing, default sanitizer is used', function(assert) {
-  let called = 0;
-  let unsafeHref = 'javascript:evil'; // jshint ignore:line
-
-  let markupSanitizer = () => {
-    called++;
-    return;
-  };
-
-  let renderer = new Renderer({markupSanitizer});
-
-  let mobiledoc = {
-    version: MOBILEDOC_VERSION,
-    sections: [
-      [
-        ["a", [ "href", unsafeHref ]]
-      ],
-      [
-        [MARKUP_SECTION_TYPE, "p", [
-          [[0], 1, 'hello world']
-        ]]
-      ]
-    ]
-  };
-  let { result } = renderer.render(mobiledoc);
-  let content = outerHTML(result);
-  assert.equal(content, `<p><a href="unsafe:${unsafeHref}">hello world</a></p>`);
-  assert.equal(called, 1, 'markupSanitizer called');
-});
-
 test('renders a mobiledoc with sectionElementRenderer', (assert) => {
   let mobiledoc = {
     version: MOBILEDOC_VERSION,

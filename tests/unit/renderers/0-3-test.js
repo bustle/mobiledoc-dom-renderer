@@ -541,41 +541,6 @@ test('XSS: "a" markups are sanitized if upper or lower case', function(assert) {
   });
 });
 
-test('renderer delegates to provided "markupSanitizer"', function(assert) {
-  let called = 0;
-
-  let markupSanitizer = ({tagName, attributeName, attributeValue}) => {
-    called++;
-    return attributeValue + 'changed';
-  };
-
-  let renderer = new Renderer({markupSanitizer});
-
-  let mobiledoc = createSimpleMobiledoc({markup: ['a', ['href', 'http://google.com/']]});
-  let { result } = renderer.render(mobiledoc);
-  let content = outerHTML(result);
-  assert.equal(content, `<p><a href="http://google.com/changed">hello world</a></p>`);
-  assert.equal(called, 1, 'markupSanitizer called');
-});
-
-test('when markupSanitizer returns nothing, default sanitizer is used', function(assert) {
-  let called = 0;
-  let unsafeHref = 'javascript:evil'; // jshint ignore:line
-
-  let markupSanitizer = () => {
-    called++;
-    return;
-  };
-
-  let renderer = new Renderer({markupSanitizer});
-
-  let mobiledoc = createSimpleMobiledoc({markup: ['a', ['href', unsafeHref]]});
-  let { result } = renderer.render(mobiledoc);
-  let content = outerHTML(result);
-  assert.equal(content, `<p><a href="unsafe:${unsafeHref}">hello world</a></p>`);
-  assert.equal(called, 1, 'markupSanitizer called');
-});
-
 test('renders a mobiledoc with atom', (assert) => {
   assert.expect(8);
   let atomName = 'hello-atom';
