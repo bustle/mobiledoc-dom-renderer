@@ -19,6 +19,12 @@ import {
   MARKUP_MARKER_TYPE,
   ATOM_MARKER_TYPE
 } from 'mobiledoc-dom-renderer/utils/marker-types';
+import {
+  createBlankMobiledoc,
+  createSimpleMobiledoc,
+  createMobiledocWithCard,
+  createMobiledocWithAtom
+} from '../../helpers/create-mobiledoc';
 
 const { test, module } = QUnit;
 const MOBILEDOC_VERSION_0_3_0 = '0.3.0';
@@ -33,31 +39,14 @@ let renderer;
 function generateTests() {
 
 test('renders an empty mobiledoc', (assert) => {
-  let mobiledoc = {
-    version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: []
-  };
-  let { result: rendered } = renderer.render(mobiledoc);
+  let { result: rendered } = renderer.render(createBlankMobiledoc());
 
   assert.ok(!!rendered, 'renders result');
   assert.equal(childNodesLength(rendered), 0, 'has no sections');
 });
 
 test('renders a mobiledoc without markups', (assert) => {
-  let mobiledoc = {
-    version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'P', [
-        [MARKUP_MARKER_TYPE, [], 0, 'hello world']]
-      ]
-    ]
-  };
+  let mobiledoc = createSimpleMobiledoc({text:'hello world'});
   let renderResult = renderer.render(mobiledoc);
   let { result: rendered } = renderResult;
   assert.equal(childNodesLength(rendered), 1,
@@ -69,17 +58,11 @@ test('renders a mobiledoc without markups', (assert) => {
 });
 
 test('renders 0.3.0 markup section "pull-quote" as div with class', (assert) => {
-  let mobiledoc = {
+  let mobiledoc = createSimpleMobiledoc({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'pull-quote', [
-        [MARKUP_MARKER_TYPE, [], 0, 'hello world']]
-      ]
-    ]
-  };
+    sectionName: 'pull-quote',
+    text: 'hello world'
+  });
   let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
@@ -89,17 +72,11 @@ test('renders 0.3.0 markup section "pull-quote" as div with class', (assert) => 
 });
 
 test('renders 0.3.1 markup section "pull-quote" as div with class', (assert) => {
-  let mobiledoc = {
+  let mobiledoc = createSimpleMobiledoc({
     version: MOBILEDOC_VERSION_0_3_1,
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'pull-quote', [
-        [MARKUP_MARKER_TYPE, [], 0, 'hello world']]
-      ]
-    ]
-  };
+    sectionName: 'pull-quote',
+    text: 'hello world'
+  });
   let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
@@ -109,17 +86,11 @@ test('renders 0.3.1 markup section "pull-quote" as div with class', (assert) => 
 });
 
 test('renders markup section "aside"', (assert) => {
-  let mobiledoc = {
+  let mobiledoc = createSimpleMobiledoc({
     version: MOBILEDOC_VERSION_0_3_1,
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'aside', [
-        [MARKUP_MARKER_TYPE, [], 0, 'hello world']]
-      ]
-    ]
-  };
+    sectionName: 'aside',
+    text: 'hello world'
+  });
   let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
@@ -129,19 +100,12 @@ test('renders markup section "aside"', (assert) => {
 });
 
 test('renders a mobiledoc with simple (no attributes) markup', (assert) => {
-  let mobiledoc = {
-    version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [],
-    markups: [
-      ['B']
-    ],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'P', [
-        [MARKUP_MARKER_TYPE, [0], 1, 'hello world']]
-      ]
-    ]
-  };
+  let mobiledoc = createSimpleMobiledoc({
+    version: MOBILEDOC_VERSION_0_3_1,
+    sectionName: 'aside',
+    text: 'hello world',
+    markup: ['B']
+  });
   let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
@@ -151,19 +115,12 @@ test('renders a mobiledoc with simple (no attributes) markup', (assert) => {
 });
 
 test('renders a mobiledoc with complex (has attributes) markup', (assert) => {
-  let mobiledoc = {
-    version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [],
-    markups: [
-      ['A', ['href', 'http://google.com']],
-    ],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'P', [
-        [MARKUP_MARKER_TYPE, [0], 1, 'hello world']
-      ]]
-    ]
-  };
+  let mobiledoc = createSimpleMobiledoc({
+    version: MOBILEDOC_VERSION_0_3_1,
+    sectionName: 'aside',
+    text: 'hello world',
+    markup: ['A', ['href', 'http://google.com']]
+  });
   let { result: rendered } = renderer.render(mobiledoc);
   assert.equal(childNodesLength(rendered), 1,
                'renders 1 section');
@@ -345,17 +302,10 @@ test('throws if card render returns invalid result', (assert) => {
     type: 'dom',
     render() { return 'string'; }
   };
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithCard({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [
-      [card.name]
-    ],
-    markups: [],
-    sections: [
-      [CARD_SECTION_TYPE, 0]
-    ]
-  };
+    card: {name: card.name}
+  });
 
   renderer = new Renderer({cards:[card]});
   assert.throws(
@@ -370,17 +320,10 @@ test('card may render nothing', (assert) => {
     type: 'dom',
     render() {}
   };
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithCard({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [
-      [card.name]
-    ],
-    markups: [],
-    sections: [
-      [CARD_SECTION_TYPE, 0]
-    ]
-  };
+    card: {name: card.name}
+  });
 
   renderer = new Renderer({cards:[card]});
   renderer.render(mobiledoc);
@@ -390,8 +333,9 @@ test('card may render nothing', (assert) => {
 
 test('rendering nested mobiledocs in cards', (assert) => {
   let renderer;
+  let cardName = 'nested-card';
   let cards = [{
-    name: 'nested-card',
+    name: cardName,
     type: 'dom',
     render({payload}) {
       let {result: rendered} = renderer.render(payload.mobiledoc);
@@ -399,29 +343,15 @@ test('rendering nested mobiledocs in cards', (assert) => {
     }
   }];
 
-  let innerMobiledoc = {
+  let innerMobiledoc = createSimpleMobiledoc({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'P', [
-        [MARKUP_MARKER_TYPE, [], 0, 'hello world']]
-      ]
-    ]
-  };
+    text: 'hello world'
+  });
 
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithCard({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [
-      ['nested-card', {mobiledoc: innerMobiledoc}]
-    ],
-    markups: [],
-    sections: [
-      [CARD_SECTION_TYPE, 0]
-    ]
-  };
+    card: {name: cardName, payload: {mobiledoc: innerMobiledoc}}
+  });
 
   renderer = new Renderer({cards});
   let { result: rendered } = renderer.render(mobiledoc);
@@ -434,17 +364,10 @@ test('rendering nested mobiledocs in cards', (assert) => {
 
 test('rendering unknown card without unknownCardHandler throws', (assert) => {
   let cardName = 'not-known';
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithCard({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [
-      [cardName]
-    ],
-    markups: [],
-    sections: [
-      [CARD_SECTION_TYPE, 0]
-    ]
-  };
+    card: {name: cardName}
+  });
   renderer = new Renderer({cards: [], unknownCardHandler: undefined});
   assert.throws(
     () => renderer.render(mobiledoc),
@@ -469,17 +392,10 @@ test('rendering unknown card uses unknownCardHandler', (assert) => {
     assert.deepEqual(payload, expectedPayload, 'correct payload');
   };
 
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithCard({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [
-      [cardName, expectedPayload]
-    ],
-    markups: [],
-    sections: [
-      [CARD_SECTION_TYPE, 0]
-    ]
-  };
+    card: {name: cardName, payload: expectedPayload}
+  });
   renderer = new Renderer({
     cards: [], cardOptions: expectedOptions, unknownCardHandler
   });
@@ -508,17 +424,10 @@ test('multiple spaces should preserve whitespace with nbsps', (assert) => {
     repeat(space, 5), 'text',
     repeat(space, 6)
   ].join('');
-  let mobiledoc = {
+  let mobiledoc = createSimpleMobiledoc({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'P', [
-        [MARKUP_MARKER_TYPE, [], 0, text]]
-      ]
-    ]
-  };
+    text
+  });
 
   let nbsp = '\u00A0';
   let sn = space + nbsp;
@@ -533,13 +442,7 @@ test('multiple spaces should preserve whitespace with nbsps', (assert) => {
 });
 
 test('throws when given unexpected mobiledoc version', (assert) => {
-  let mobiledoc = {
-    version: '0.1.0',
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: []
-  };
+  let mobiledoc = createBlankMobiledoc({version: '0.1.0'});
 
   assert.throws(
     () => renderer.render(mobiledoc),
@@ -596,7 +499,7 @@ test('XSS: unexpected markup types are not rendered', (assert) => {
   assert.ok(content.indexOf('script') === -1, 'no script tag rendered');
 });
 
-test('XSS: links with dangerous href values are not rendered', (assert) => {
+test('XSS: links with dangerous href values are sanitized', (assert) => {
   let unsafeHref = 'javascript:alert("link XSS")'; // jshint ignore:line
   let mobiledoc = {
     version: MOBILEDOC_VERSION_0_3_0,
@@ -620,6 +523,57 @@ test('XSS: links with dangerous href values are not rendered', (assert) => {
   let { result } = renderer.render(mobiledoc);
   let content = outerHTML(result);
   assert.equal(content, `<p><a href="unsafe:${escapeQuotes(unsafeHref)}">link text</a>plain text</p>`);
+});
+
+test('XSS: "a" markups are sanitized if upper or lower case', function(assert) {
+  let unsafeHref = 'javascript:alert("link XSS")'; // jshint ignore:line
+  let markups = [
+    ['a', ['href', unsafeHref]],
+    ['A', ['href', unsafeHref]],
+    ['a', ['HREF', unsafeHref]]
+  ];
+
+  markups.forEach(markup => {
+    let mobiledoc = createSimpleMobiledoc({markup});
+    let { result } = renderer.render(mobiledoc);
+    let content = outerHTML(result);
+    assert.equal(content, `<p><a href="unsafe:${escapeQuotes(unsafeHref)}">hello world</a></p>`);
+  });
+});
+
+test('renderer delegates to provided "markupSanitizer"', function(assert) {
+  let called = 0;
+
+  let markupSanitizer = ({tagName, attributeName, attributeValue}) => {
+    called++;
+    return attributeValue + 'changed';
+  };
+
+  let renderer = new Renderer({markupSanitizer});
+
+  let mobiledoc = createSimpleMobiledoc({markup: ['a', ['href', 'http://google.com/']]});
+  let { result } = renderer.render(mobiledoc);
+  let content = outerHTML(result);
+  assert.equal(content, `<p><a href="http://google.com/changed">hello world</a></p>`);
+  assert.equal(called, 1, 'markupSanitizer called');
+});
+
+test('when markupSanitizer returns nothing, default sanitizer is used', function(assert) {
+  let called = 0;
+  let unsafeHref = 'javascript:evil'; // jshint ignore:line
+
+  let markupSanitizer = () => {
+    called++;
+    return;
+  };
+
+  let renderer = new Renderer({markupSanitizer});
+
+  let mobiledoc = createSimpleMobiledoc({markup: ['a', ['href', unsafeHref]]});
+  let { result } = renderer.render(mobiledoc);
+  let content = outerHTML(result);
+  assert.equal(content, `<p><a href="unsafe:${unsafeHref}">hello world</a></p>`);
+  assert.equal(called, 1, 'markupSanitizer called');
 });
 
 test('renders a mobiledoc with atom', (assert) => {
@@ -722,19 +676,10 @@ test('atom may render nothing', (assert) => {
     type: 'dom',
     render() {}
   };
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithAtom({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [
-      ['ok', 'Bob', { id: 42 }],
-    ],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'P', [
-        [ATOM_MARKER_TYPE, [], 0, 0]]
-      ]
-    ]
-  };
+    atom: ['ok', 'Bob', { id: 42 }]
+  });
 
   renderer = new Renderer({atoms:[atom]});
   renderer.render(mobiledoc);
@@ -743,19 +688,10 @@ test('atom may render nothing', (assert) => {
 });
 
 test('throws when rendering unknown atom without unknownAtomHandler', (assert) => {
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithAtom({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [
-      ['missing-atom', 'Bob', { id: 42 }],
-    ],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'P', [
-        [ATOM_MARKER_TYPE, [], 0, 0]]
-      ]
-    ]
-  };
+    atom: ['missing-atom', 'Bob', { id: 42 }]
+  });
   renderer = new Renderer({atoms: [], unknownAtomHandler: undefined});
   assert.throws(
     () => renderer.render(mobiledoc),
@@ -769,19 +705,10 @@ test('rendering unknown atom uses unknownAtomHandler', (assert) => {
   let atomName = 'missing-atom';
   let expectedPayload = { id: 42 };
   let cardOptions = {};
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithAtom({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [
-      ['missing-atom', 'Bob', { id: 42 }],
-    ],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'P', [
-        [ATOM_MARKER_TYPE, [], 0, 0]]
-      ]
-    ]
-  };
+    atom: ['missing-atom', 'Bob', { id: 42 }]
+  });
   let unknownAtomHandler = ({env, payload, options}) => {
     assert.equal(env.name, atomName, 'correct name');
     assert.ok(!!env.onTeardown, 'onTeardown hook exists');
@@ -833,13 +760,13 @@ test('renders a mobiledoc with sectionElementRenderer', (assert) => {
 
 test('renders a mobiledoc with markupElementRenderer', (assert) => {
   let mobiledoc = {
-    "version": MOBILEDOC_VERSION_0_3_0,
-    "atoms": [],
-    "cards": [],
-    "markups": [
+    version: MOBILEDOC_VERSION_0_3_0,
+    atoms: [],
+    cards: [],
+    markups: [
       ["a", [ "href", "#foo" ]]
     ],
-    "sections": [
+    sections: [
       [MARKUP_SECTION_TYPE, "p", [
         [MARKUP_MARKER_TYPE, [], 0, "Lorem ipsum "],
         [MARKUP_MARKER_TYPE, [0], 1, "dolor"],
@@ -873,19 +800,11 @@ test('renders a mobiledoc with markupElementRenderer', (assert) => {
 });
 
 test('unexpected markup types are not handled by markup renderer', (assert) => {
-  let mobiledoc = {
+  let mobiledoc = createSimpleMobiledoc({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [],
-    markups: [
-      ['script']
-    ],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'p', [
-        [MARKUP_MARKER_TYPE, [0], 1, 'alert("markup XSS")']
-      ]]
-    ]
-  };
+    markup: ['script'],
+    text: 'alert("markup XSS")'
+  });
   renderer = new Renderer({
     markupElementRenderer: {
       SCRIPT: (markerType, dom) => {
@@ -908,17 +827,10 @@ module('Unit: Mobiledoc DOM Renderer - 0.3', {
 generateTests();
 
 test('teardown removes rendered sections from dom', (assert) => {
-  let mobiledoc = {
+  let mobiledoc = createSimpleMobiledoc({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [],
-    markups: [],
-    sections: [
-      [MARKUP_SECTION_TYPE, 'p', [
-        [MARKUP_MARKER_TYPE, [], 0, 'Hello world']
-      ]]
-    ]
-  };
+    text: 'Hello world'
+  });
 
   let { result: rendered, teardown } = renderer.render(mobiledoc);
   assert.equal(childNodesLength(rendered), 1, 'renders 1 section');
@@ -945,17 +857,10 @@ test('teardown hook calls registered teardown methods', (assert) => {
     }
   };
 
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithCard({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [
-      [cardName]
-    ],
-    markups: [],
-    sections: [
-      [CARD_SECTION_TYPE, 0]
-    ]
-  };
+    card: {name: cardName}
+  });
 
   renderer = new Renderer({cards: [card]});
   let { teardown } = renderer.render(mobiledoc);
@@ -979,17 +884,10 @@ test('render hook calls registered didRender callbacks', (assert) => {
     }
   };
 
-  let mobiledoc = {
+  let mobiledoc = createMobiledocWithCard({
     version: MOBILEDOC_VERSION_0_3_0,
-    atoms: [],
-    cards: [
-      [cardName]
-    ],
-    markups: [],
-    sections: [
-      [CARD_SECTION_TYPE, 0]
-    ]
-  };
+    card: { name: cardName }
+  });
 
   renderer = new Renderer({cards: [card]});
 
