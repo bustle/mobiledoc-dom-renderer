@@ -129,34 +129,15 @@ var renderer = new MobiledocDOMRenderer({
 var rendered = renderer.render(mobiledoc);
 ```
 
-#### markupSanitizer
+#### Attribute Sanitization (XSS Protection)
 
-Use this renderer option to customize how markup attribute values are sanitized.
-The renderer's default markupSanitizer only sanitizes `href` values, prefixing
-unsafe values with the string `"unsafe:"`. All other attribute values are
-passed through unchanged.
-
-To change this behavior, pass your own markupSanitizer function when
-instantiating the renderer. If your markupSanitizer function returns a string,
-that value will be used when rendering. If it returns a falsy value, the
-renderer's default markupSanitizer will be used.
-
-```
-var renderer = new MobiledocDOMRenderer({
-  markupSanitizer: function({tagName, attributeName, attributeValue}) {
-    // This function will be called for every attribute on every markup.
-    // Return a sanitized attributeValue or undefined (in which case the
-    // default sanitizer will be used)
-  }
-});
-```
-
-The default sanitization of href values uses an environment-appropriate url
-parser if it can find one. It's unlikely, but if the renderer is in an
-environment where it cannot determine a url parser it will throw. (This can
-happen when running the renderer in a VM Sandbox, like ember-cli-fastboot
-does.) In this case you must supply a custom markupSanitizer that can handle
-`href` sanitization.
+Mobiledoc DOM Renderer sanitizes the `href` attribute of 'A' markups, prefixing
+the string `unsafe:` on potentially unsafe urls. It determines an environment-
+appropriate URL protocol parser. In rare cases it may be unable to determine one
+(this can happen when running the renderer in a Node VM Sandbox, like ember-cli-
+fastboot does), and will throw in that case. To fix this, you can provide a
+custom markupElementRenderer for the 'A' tag that will be used instead of the
+default.
 
 ### Tests
 
