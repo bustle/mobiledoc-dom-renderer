@@ -1,6 +1,14 @@
+<a name="0.6.4-0"></a>
+## 0.6.4-0 (2017-03-06)
+
+* fix(href-sanitization): Accept markupSanitizer option, downcase tagName and attributeName (#50) ([aa1aedc](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/aa1aedc)), closes [#49](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/49) [#48](https://github.com/bustlelabs/mobiledoc-dom-renderer/issues/48)
+
+
+
 <a name="0.6.3"></a>
 ## 0.6.3 (2017-02-22)
 
+* 0.6.3 ([a3d94c8](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/a3d94c8))
 * Revert usage of glimmer/build for building (for now) (#46) ([c23676a](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/c23676a))
 
 
