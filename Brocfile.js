@@ -2,7 +2,7 @@
 "use strict";
 
 var multiBuilder = require('broccoli-multi-builder');
-var mergeTrees = require('broccoli-merge-trees');
+var Merge = require('broccoli-merge-trees');
 var testBuilder = require('broccoli-test-builder');
 var Funnel = require('broccoli-funnel');
 
@@ -15,7 +15,7 @@ var simpleDOMTree = new Funnel('node_modules/simple-dom/dist/', {
   destDir: 'tests'
 });
 
-module.exports = mergeTrees([
+module.exports = new Merge([
   multiBuilder.build('amd', options),
   multiBuilder.build('global', options),
   multiBuilder.build('commonjs', options),
