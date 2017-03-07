@@ -1,6 +1,6 @@
 {
   "name": "mobiledoc-dom-renderer",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Renders Mobiledoc input to DOM output",
   "scripts": {
     "start": "broccoli serve",

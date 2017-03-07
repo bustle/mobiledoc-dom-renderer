@@ -1,6 +1,14 @@
+<a name="0.6.5"></a>
+## 0.6.5 (2017-03-07)
+
+* fix(href-sanitization): Improve protocol detection for href sanitization (#53) ([a91b257](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/a91b257))
+
+
+
 <a name="0.6.4"></a>
 ## 0.6.4 (2017-03-06)
 
+* 0.6.4 ([cac185a](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/cac185a))
 * 0.6.4-0 ([d564abb](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/d564abb))
 * 0.6.4-1 ([c7cc41b](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/c7cc41b))
 * chore(markupSanitizer): Remove markupSanitizer in favor of markupElementRenderer (#51) ([8f359af](https://github.com/bustlelabs/mobiledoc-dom-renderer/commit/8f359af))
