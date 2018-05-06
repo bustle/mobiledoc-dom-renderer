@@ -99,6 +99,20 @@ test('renders markup section "aside"', (assert) => {
   assert.equal(outerHTML(sectionEl), '<aside>hello world</aside>');
 });
 
+test('renders markup "small', (assert) => {
+  let mobiledoc = createSimpleMobiledoc({
+    version: MOBILEDOC_VERSION_0_3_1,
+    markup: ['small'],
+    text: 'small world'
+  });
+  let { result: rendered } = renderer.render(mobiledoc);
+  assert.equal(childNodesLength(rendered), 1,
+               'renders 1 section');
+  let sectionEl = rendered.firstChild;
+
+  assert.equal(innerHTML(sectionEl), '<small>small world</small>');
+});
+
 test('renders a mobiledoc with simple (no attributes) markup', (assert) => {
   let mobiledoc = createSimpleMobiledoc({
     version: MOBILEDOC_VERSION_0_3_1,
