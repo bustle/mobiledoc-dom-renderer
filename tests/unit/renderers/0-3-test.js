@@ -71,6 +71,22 @@ test('renders 0.3.0 markup section "pull-quote" as div with class', (assert) => 
   assert.equal(outerHTML(sectionEl), '<div class="pull-quote">hello world</div>');
 });
 
+test('renders 0.3.0 markup section attributes', (assert) => {
+  let mobiledoc = createSimpleMobiledoc({
+    version: MOBILEDOC_VERSION_0_3_0,
+    sectionName: 'p',
+    text: 'hello world',
+    attributes: { 'data-md-text-align': 'center' }
+  });
+
+  let { result: rendered } = renderer.render(mobiledoc);
+  assert.equal(childNodesLength(rendered), 1,
+               'renders 1 section');
+  let sectionEl = rendered.firstChild;
+
+  assert.equal(outerHTML(sectionEl), '<p style="text-align: center;">hello world</p>')
+});
+
 test('renders 0.3.1 markup section "pull-quote" as div with class', (assert) => {
   let mobiledoc = createSimpleMobiledoc({
     version: MOBILEDOC_VERSION_0_3_1,

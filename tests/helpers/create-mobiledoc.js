@@ -8,6 +8,8 @@ import {
   ATOM_MARKER_TYPE
 } from 'mobiledoc-dom-renderer/utils/marker-types';
 
+import { objectToSortedKVArray } from 'mobiledoc-dom-renderer/utils/array-utils';
+
 export function createBlankMobiledoc({version=MOBILEDOC_VERSION_0_3_1}={}) {
   return {
     version,
@@ -46,7 +48,7 @@ export function createMobiledocWithCard({version=MOBILEDOC_VERSION_0_3_1, card}=
   };
 }
 
-export function createSimpleMobiledoc({sectionName='p', text='hello world', markup=null, version=MOBILEDOC_VERSION_0_3_1}={}) {
+export function createSimpleMobiledoc({sectionName='p', text='hello world', markup=null, version=MOBILEDOC_VERSION_0_3_1, attributes={}}={}) {
   let openedMarkups = markup ? [0] : [];
   let closedMarkups = markup ? 1 : 0;
   let markups = markup ? [markup] : [];
@@ -58,8 +60,10 @@ export function createSimpleMobiledoc({sectionName='p', text='hello world', mark
     markups: markups,
     sections: [
       [MARKUP_SECTION_TYPE, sectionName, [
-        [MARKUP_MARKER_TYPE, openedMarkups, closedMarkups, text]]
-      ]
+          [MARKUP_MARKER_TYPE, openedMarkups, closedMarkups, text]
+        ],
+        objectToSortedKVArray(attributes)
+      ],
     ]
   };
 }
