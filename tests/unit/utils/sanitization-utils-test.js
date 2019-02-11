@@ -11,6 +11,7 @@ module('Unit: Mobiledoc DOM Renderer - Sanitization utils');
 test('#sanitizeHref', (assert) => {
   let unsafe = [
     'javascript:alert("XSS")', // jshint ignore: line
+    'jaVasCript:alert("XSS")', // jshint ignore: line
     'vbscript:alert("XSS")' // jshint ignore: line
   ];
 
