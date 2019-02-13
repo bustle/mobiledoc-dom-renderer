@@ -1,7 +1,28 @@
 {
   "name": "mobiledoc-dom-renderer",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Renders Mobiledoc input to DOM output",
+  "license": "MIT",
+  "author": "Cory Forsyth <cory.forsyth@gmail.com> (http://coryforsyth.com/)",
+  "homepage": "https://github.com/bustle/mobiledoc-dom-renderer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bustle/mobiledoc-dom-renderer"
+  },
+  "bugs": {
+    "url": "https://github.com/bustle/mobiledoc-dom-renderer/issues"
+  },
+  "keywords": [
+    "mobiledoc",
+    "mobiledoc-renderer"
+  ],
+  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js",
+  "module": "lib/index.js",
+  "files": [
+    "dist",
+    "lib",
+    "index.js"
+  ],
   "scripts": {
     "start": "broccoli serve",
     "test": "testem ci",
@@ -11,26 +32,6 @@
     "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s",
     "version": "npm run update-changelog && git add CHANGELOG.md"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bustlelabs/mobiledoc-dom-renderer"
-  },
-  "keywords": [
-    "mobiledoc",
-    "mobiledoc-renderer",
-    "content-kit"
-  ],
-  "author": "Cory Forsyth <cory.forsyth@gmail.com> (http://coryforsyth.com/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bustlelabs/mobiledoc-dom-renderer/issues"
-  },
-  "files": [
-    "dist",
-    "lib",
-    "index.js"
-  ],
-  "homepage": "https://github.com/bustlelabs/mobiledoc-dom-renderer",
   "devDependencies": {
     "broccoli": "^0.16.3",
     "broccoli-funnel": "^1.1.0",
@@ -41,7 +42,5 @@
     "conventional-changelog-cli": "^1.1.1",
     "simple-dom": "^0.3.2",
     "testem": "^1.15.0"
-  },
-  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js",
-  "module": "lib/index.js"
+  }
 }
