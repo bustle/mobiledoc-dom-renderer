@@ -42,5 +42,6 @@
     "simple-dom": "^0.3.2",
     "testem": "^1.15.0"
   },
-  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js"
+  "main": "dist/commonjs/mobiledoc-dom-renderer/index.js",
+  "module": "lib/index.js"
 }
