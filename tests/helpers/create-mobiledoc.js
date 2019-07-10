@@ -1,4 +1,4 @@
-const MOBILEDOC_VERSION_0_3_1 = '0.3.1';
+const MOBILEDOC_VERSION_0_3_2 = '0.3.2';
 import {
   MARKUP_SECTION_TYPE,
   CARD_SECTION_TYPE
@@ -8,7 +8,9 @@ import {
   ATOM_MARKER_TYPE
 } from 'mobiledoc-dom-renderer/utils/marker-types';
 
-export function createBlankMobiledoc({version=MOBILEDOC_VERSION_0_3_1}={}) {
+import { objectToSortedKVArray } from 'mobiledoc-dom-renderer/utils/array-utils';
+
+export function createBlankMobiledoc({version=MOBILEDOC_VERSION_0_3_2}={}) {
   return {
     version,
     atoms: [],
@@ -18,7 +20,7 @@ export function createBlankMobiledoc({version=MOBILEDOC_VERSION_0_3_1}={}) {
   };
 }
 
-export function createMobiledocWithAtom({version=MOBILEDOC_VERSION_0_3_1, atom}={}) {
+export function createMobiledocWithAtom({version=MOBILEDOC_VERSION_0_3_2, atom}={}) {
   return {
     version,
     atoms: [atom],
@@ -32,7 +34,7 @@ export function createMobiledocWithAtom({version=MOBILEDOC_VERSION_0_3_1, atom}=
   };
 }
 
-export function createMobiledocWithCard({version=MOBILEDOC_VERSION_0_3_1, card}={}) {
+export function createMobiledocWithCard({version=MOBILEDOC_VERSION_0_3_2, card}={}) {
   return {
     version,
     atoms: [],
@@ -46,7 +48,7 @@ export function createMobiledocWithCard({version=MOBILEDOC_VERSION_0_3_1, card}=
   };
 }
 
-export function createSimpleMobiledoc({sectionName='p', text='hello world', markup=null, version=MOBILEDOC_VERSION_0_3_1}={}) {
+export function createSimpleMobiledoc({sectionName='p', text='hello world', markup=null, version=MOBILEDOC_VERSION_0_3_2, attributes={}}={}) {
   let openedMarkups = markup ? [0] : [];
   let closedMarkups = markup ? 1 : 0;
   let markups = markup ? [markup] : [];
@@ -58,8 +60,10 @@ export function createSimpleMobiledoc({sectionName='p', text='hello world', mark
     markups: markups,
     sections: [
       [MARKUP_SECTION_TYPE, sectionName, [
-        [MARKUP_MARKER_TYPE, openedMarkups, closedMarkups, text]]
-      ]
+          [MARKUP_MARKER_TYPE, openedMarkups, closedMarkups, text]
+        ],
+        objectToSortedKVArray(attributes)
+      ],
     ]
   };
 }

@@ -29,6 +29,7 @@ import {
 const { test, module } = QUnit;
 const MOBILEDOC_VERSION_0_3_0 = '0.3.0';
 const MOBILEDOC_VERSION_0_3_1 = '0.3.1';
+const MOBILEDOC_VERSION_0_3_2 = '0.3.2';
 const dataUri = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=";
 
 
@@ -69,6 +70,36 @@ test('renders 0.3.0 markup section "pull-quote" as div with class', (assert) => 
   let sectionEl = rendered.firstChild;
 
   assert.equal(outerHTML(sectionEl), '<div class="pull-quote">hello world</div>');
+});
+
+test('renders 0.3.2 markup section attributes', (assert) => {
+  let mobiledoc = createSimpleMobiledoc({
+    version: MOBILEDOC_VERSION_0_3_2,
+    sectionName: 'p',
+    text: 'hello world',
+    attributes: { 'data-md-text-align': 'center' }
+  });
+
+  let { result: rendered } = renderer.render(mobiledoc);
+  assert.equal(childNodesLength(rendered), 1,
+               'renders 1 section');
+  let sectionEl = rendered.firstChild;
+
+  assert.equal(outerHTML(sectionEl), '<p data-md-text-align="center">hello world</p>');
+});
+
+test('throws when given invalid attribute', (assert) => {
+  let mobiledoc = createSimpleMobiledoc({
+    version: MOBILEDOC_VERSION_0_3_2,
+    sectionName: 'p',
+    text: 'hello world',
+    attributes: { 'data-md-bad-attribute': 'something' }
+  });
+
+  assert.throws(
+    () => { renderer.render(mobiledoc) }, // jshint ignore: line
+    new RegExp(`Cannot use attribute: data-md-bad-attribute`)
+  );
 });
 
 test('renders 0.3.1 markup section "pull-quote" as div with class', (assert) => {
