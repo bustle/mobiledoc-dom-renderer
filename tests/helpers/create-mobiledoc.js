@@ -53,17 +53,23 @@ export function createSimpleMobiledoc({sectionName='p', text='hello world', mark
   let closedMarkups = markup ? 1 : 0;
   let markups = markup ? [markup] : [];
 
+  let section = [
+    MARKUP_SECTION_TYPE,
+    sectionName,
+    [
+      [MARKUP_MARKER_TYPE, openedMarkups, closedMarkups, text]
+    ]
+  ];
+
+  if (version === MOBILEDOC_VERSION_0_3_2) {
+    section.push(objectToSortedKVArray(attributes));
+  }
+
   return {
     version,
     atoms: [],
     cards: [],
     markups: markups,
-    sections: [
-      [MARKUP_SECTION_TYPE, sectionName, [
-          [MARKUP_MARKER_TYPE, openedMarkups, closedMarkups, text]
-        ],
-        objectToSortedKVArray(attributes)
-      ],
-    ]
+    sections: [section]
   };
 }
