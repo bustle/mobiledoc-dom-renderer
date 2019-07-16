@@ -1,6 +1,6 @@
 {
   "name": "mobiledoc-dom-renderer",
-  "version": "0.6.6",
+  "version": "0.7.0",
   "description": "Renders Mobiledoc input to DOM output",
   "license": "MIT",
   "author": "Cory Forsyth <cory.forsyth@gmail.com> (http://coryforsyth.com/)",
