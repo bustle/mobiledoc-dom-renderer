@@ -473,6 +473,24 @@ test('multiple spaces should preserve whitespace with nbsps', (assert) => {
   assert.equal(textNode.nodeValue, expectedText, 'renders the text');
 });
 
+test('replaces tab characters with EM SPACE', (assert) => {
+  let mobiledoc = {
+    version: MOBILEDOC_VERSION,
+    sections: [
+      [], // markers
+      [   // sections
+        [MARKUP_SECTION_TYPE, 'P', [
+          [[], 0, "\tHello	world"]]
+        ]
+      ]
+    ]
+  };
+
+  let { result: rendered } = renderer.render(mobiledoc);
+  let elementNode = rendered.firstChild.firstChild;
+  assert.equal(elementNode.nodeValue, '\u2003Hello\u2003world', 'replaces tabs with &emsp;');
+});
+
 test('throws when given unexpected mobiledoc version', (assert) => {
   let mobiledoc = {
     version: '0.1.0',
