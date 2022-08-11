@@ -1,4 +1,4 @@
-## Mobiledoc DOM Renderer [![Build Status](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer.svg?branch=master)](https://travis-ci.org/bustlelabs/mobiledoc-dom-renderer)
+## Mobiledoc DOM Renderer
 
 This is a DOM renderer for the [Mobiledoc format](https://github.com/bustlelabs/mobiledoc-kit/blob/master/MOBILEDOC.md) used
 by [Mobiledoc-Kit](https://github.com/bustlelabs/mobiledoc-kit).
