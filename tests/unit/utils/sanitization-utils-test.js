@@ -12,6 +12,9 @@ test('#sanitizeHref', (assert) => {
   let unsafe = [
     'javascript:alert("XSS")', // jshint ignore: line
     'jaVasCript:alert("XSS")', // jshint ignore: line
+    'javascript:javascript:alert("XSS")', // jshint ignore: line
+    'java script:alert("XSS")', // jshint ignore: line
+    'ja vas cri pt::alert("XSS")', // jshint ignore: line
     'vbscript:alert("XSS")' // jshint ignore: line
   ];
 
