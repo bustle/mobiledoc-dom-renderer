@@ -1,7 +1,18 @@
+<a name="0.7.2"></a>
+## <small>0.7.2 (2022-08-12)</small>
+
+* Fix XSS vulnerabilities in link sanitizer ([1e5671d](https://github.com/bustle/mobiledoc-dom-renderer/commit/1e5671d))
+
+
+
 <a name="0.7.1"></a>
 ## <small>0.7.1 (2022-08-11)</small>
 
+* Add package-lock, remove no longer existing CI ([66013e1](https://github.com/bustle/mobiledoc-dom-renderer/commit/66013e1))
+* Remove attributes in tests for versions of Mobiledoc < 0.3.2 ([690b84d](https://github.com/bustle/mobiledoc-dom-renderer/commit/690b84d))
 * Replace tab characters with emspaces ([fe6e051](https://github.com/bustle/mobiledoc-dom-renderer/commit/fe6e051))
+* v0.7.1 ([edd348d](https://github.com/bustle/mobiledoc-dom-renderer/commit/edd348d))
+
 
 
 <a name="0.7.0"></a>
@@ -9,11 +20,14 @@
 
 * Support Mobiledoc 0.3.2 ([b4c48ab](https://github.com/bustle/mobiledoc-dom-renderer/commit/b4c48ab))
 * Use project-specific "broccoli" executable rather than global ([578ef83](https://github.com/bustle/mobiledoc-dom-renderer/commit/578ef83))
+* v0.7.0 ([08315f4](https://github.com/bustle/mobiledoc-dom-renderer/commit/08315f4))
+
 
 
 <a name="0.6.6"></a>
 ## <small>0.6.6 (2019-02-13)</small>
 
+* 0.6.6 ([e57e186](https://github.com/bustle/mobiledoc-dom-renderer/commit/e57e186))
 * add module path to package.json ([56b7e57](https://github.com/bustle/mobiledoc-dom-renderer/commit/56b7e57))
 * Ignore case on bad protocols ([7ca17eb](https://github.com/bustle/mobiledoc-dom-renderer/commit/7ca17eb))
 
@@ -22,6 +36,7 @@
 <a name="0.6.5"></a>
 ## <small>0.6.5 (2017-03-07)</small>
 
+* 0.6.5 ([53e705b](https://github.com/bustle/mobiledoc-dom-renderer/commit/53e705b))
 * fix(href-sanitization): Improve protocol detection for href sanitization (#53) ([a91b257](https://github.com/bustle/mobiledoc-dom-renderer/commit/a91b257)), closes [#53](https://github.com/bustle/mobiledoc-dom-renderer/issues/53)
 
 
@@ -29,6 +44,9 @@
 <a name="0.6.4"></a>
 ## <small>0.6.4 (2017-03-06)</small>
 
+* 0.6.4 ([cac185a](https://github.com/bustle/mobiledoc-dom-renderer/commit/cac185a))
+* 0.6.4-0 ([d564abb](https://github.com/bustle/mobiledoc-dom-renderer/commit/d564abb))
+* 0.6.4-1 ([c7cc41b](https://github.com/bustle/mobiledoc-dom-renderer/commit/c7cc41b))
 * chore(markupSanitizer): Remove markupSanitizer in favor of markupElementRenderer (#51) ([8f359af](https://github.com/bustle/mobiledoc-dom-renderer/commit/8f359af)), closes [#51](https://github.com/bustle/mobiledoc-dom-renderer/issues/51)
 * fix(href-sanitization): Accept markupSanitizer option, downcase tagName and attributeName (#50) ([aa1aedc](https://github.com/bustle/mobiledoc-dom-renderer/commit/aa1aedc)), closes [#50](https://github.com/bustle/mobiledoc-dom-renderer/issues/50) [#49](https://github.com/bustle/mobiledoc-dom-renderer/issues/49) [#48](https://github.com/bustle/mobiledoc-dom-renderer/issues/48)
 
@@ -37,13 +55,23 @@
 <a name="0.6.3"></a>
 ## <small>0.6.3 (2017-02-22)</small>
 
+* 0.6.3 ([a3d94c8](https://github.com/bustle/mobiledoc-dom-renderer/commit/a3d94c8))
 * Revert usage of glimmer/build for building (for now) (#46) ([c23676a](https://github.com/bustle/mobiledoc-dom-renderer/commit/c23676a)), closes [#46](https://github.com/bustle/mobiledoc-dom-renderer/issues/46)
+
+
+
+<a name="0.6.2"></a>
+## <small>0.6.2 (2017-02-16)</small>
+
+* 0.6.2 ([49d56e7](https://github.com/bustle/mobiledoc-dom-renderer/commit/49d56e7))
+* prepublish ([071bcbf](https://github.com/bustle/mobiledoc-dom-renderer/commit/071bcbf))
 
 
 
 <a name="0.6.1"></a>
 ## <small>0.6.1 (2017-02-16)</small>
 
+* 0.6.1 ([0f8d5a6](https://github.com/bustle/mobiledoc-dom-renderer/commit/0f8d5a6))
 * use forked glimmer-build without babel helpers (#45) ([f9882db](https://github.com/bustle/mobiledoc-dom-renderer/commit/f9882db)), closes [#45](https://github.com/bustle/mobiledoc-dom-renderer/issues/45)
 * use typeof check (#42) ([2170c2b](https://github.com/bustle/mobiledoc-dom-renderer/commit/2170c2b)), closes [#42](https://github.com/bustle/mobiledoc-dom-renderer/issues/42) [#41](https://github.com/bustle/mobiledoc-dom-renderer/issues/41)
 
@@ -52,6 +80,7 @@
 <a name="0.6.0"></a>
 ## 0.6.0 (2017-02-14)
 
+* 0.6.0 ([89a33b1](https://github.com/bustle/mobiledoc-dom-renderer/commit/89a33b1))
 * Added tests for #reduceAndSanitizeAttributes ([1efce8e](https://github.com/bustle/mobiledoc-dom-renderer/commit/1efce8e))
 * Cleanup for sanitization ([c81f512](https://github.com/bustle/mobiledoc-dom-renderer/commit/c81f512))
 * Cover edge case. ([eb1a0d6](https://github.com/bustle/mobiledoc-dom-renderer/commit/eb1a0d6))
@@ -66,6 +95,9 @@
 <a name="0.5.4"></a>
 ## <small>0.5.4 (2016-11-15)</small>
 
+* 0.5.2 ([40cdbe5](https://github.com/bustle/mobiledoc-dom-renderer/commit/40cdbe5))
+* 0.5.3 ([43f7908](https://github.com/bustle/mobiledoc-dom-renderer/commit/43f7908))
+* 0.5.4 ([5730c65](https://github.com/bustle/mobiledoc-dom-renderer/commit/5730c65))
 * Add a markup renderer option (#32) ([a368f34](https://github.com/bustle/mobiledoc-dom-renderer/commit/a368f34)), closes [#32](https://github.com/bustle/mobiledoc-dom-renderer/issues/32)
 * Document markup renderer (#33) ([2614b4e](https://github.com/bustle/mobiledoc-dom-renderer/commit/2614b4e)), closes [#33](https://github.com/bustle/mobiledoc-dom-renderer/issues/33)
 * Mobiledoc 0.3.1 ([93cd8ba](https://github.com/bustle/mobiledoc-dom-renderer/commit/93cd8ba))
@@ -81,6 +113,8 @@
 
 * [bugfix] Pass dom, isInEditor args to atoms ([6c98424](https://github.com/bustle/mobiledoc-dom-renderer/commit/6c98424))
 * [docs] minor change to release process in readme ([b637a47](https://github.com/bustle/mobiledoc-dom-renderer/commit/b637a47))
+* v0.5.1 ([5ddbf4c](https://github.com/bustle/mobiledoc-dom-renderer/commit/5ddbf4c))
+
 
 
 <a name="0.5.0"></a>
@@ -90,11 +124,14 @@
 * Update changelog ([1505a05](https://github.com/bustle/mobiledoc-dom-renderer/commit/1505a05))
 * update conventional-changelog dep and change release steps in readme ([6fd519c](https://github.com/bustle/mobiledoc-dom-renderer/commit/6fd519c))
 * Update mobiledoc version example to 0.3.0 ([22f2de3](https://github.com/bustle/mobiledoc-dom-renderer/commit/22f2de3))
+* v0.5.0 ([e878ad5](https://github.com/bustle/mobiledoc-dom-renderer/commit/e878ad5))
+
 
 
 <a name="0.4.1"></a>
 ## <small>0.4.1 (2016-03-11)</small>
 
+* 0.4.1 ([d350c73](https://github.com/bustle/mobiledoc-dom-renderer/commit/d350c73))
 * Render pull-quote as <div class="pull-quote" ([638f46d](https://github.com/bustle/mobiledoc-dom-renderer/commit/638f46d)), closes [#26](https://github.com/bustle/mobiledoc-dom-renderer/issues/26)
 * Update changelog ([72ed2a5](https://github.com/bustle/mobiledoc-dom-renderer/commit/72ed2a5))
 
@@ -103,6 +140,7 @@
 <a name="0.4.0"></a>
 ## 0.4.0 (2016-02-21)
 
+* 0.4.0 ([c426575](https://github.com/bustle/mobiledoc-dom-renderer/commit/c426575))
 * Use strict in brocfile ([bba53ff](https://github.com/bustle/mobiledoc-dom-renderer/commit/bba53ff))
 
 
@@ -110,6 +148,7 @@
 <a name="0.4.0-beta4"></a>
 ## 0.4.0-beta4 (2016-02-20)
 
+* 0.4.0-beta4 ([dc07520](https://github.com/bustle/mobiledoc-dom-renderer/commit/dc07520))
 * Create section element with correct args ([6f8df27](https://github.com/bustle/mobiledoc-dom-renderer/commit/6f8df27))
 
 
