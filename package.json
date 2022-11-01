@@ -33,12 +33,12 @@
     "version": "npm run update-changelog && git add CHANGELOG.md"
   },
   "devDependencies": {
-    "broccoli": "^0.16.3",
+    "broccoli": "^3.5.2",
     "broccoli-cli": "^1.0.0",
     "broccoli-funnel": "^1.1.0",
     "broccoli-merge-trees": "^0.2.1",
-    "broccoli-multi-builder": "^0.2.6",
-    "broccoli-test-builder": "^0.2.0",
+    "broccoli-multi-builder": "^0.3.0",
+    "broccoli-test-builder": "^0.4.0",
     "conventional-changelog": "^1.1.0",
     "conventional-changelog-cli": "^1.1.1",
     "simple-dom": "^0.3.2",
