@@ -42,6 +42,6 @@
     "conventional-changelog": "^1.1.0",
     "conventional-changelog-cli": "^1.1.1",
     "simple-dom": "^0.3.2",
-    "testem": "^1.15.0"
+    "testem": "^3.10.1"
   }
 }
