@@ -93,12 +93,12 @@ test('throws when given invalid attribute', (assert) => {
     version: MOBILEDOC_VERSION_0_3_2,
     sectionName: 'p',
     text: 'hello world',
-    attributes: { 'data-md-bad-attribute': 'something' }
+    attributes: { 'bad-attribute': 'something' }
   });
 
   assert.throws(
     () => { renderer.render(mobiledoc) }, // jshint ignore: line
-    new RegExp(`Cannot use attribute: data-md-bad-attribute`)
+    new RegExp(`Cannot use attribute: bad-attribute`)
   );
 });
 
